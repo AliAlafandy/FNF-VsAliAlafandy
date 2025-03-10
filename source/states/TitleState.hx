@@ -335,7 +335,6 @@ class TitleState extends MusicBeatState
 		{
 			skipIntro();
 		}
-
 		if(swagShader != null)
 		{
 			if(controls.UI_LEFT) swagShader.hue -= elapsed * 0.1;
@@ -352,8 +351,7 @@ class TitleState extends MusicBeatState
 			var money:Alphabet = new Alphabet(0, 0, textArray[i], true);
 			money.screenCenter(X);
 			money.y += (i * 60) + 200 + offset;
-			if(credGroup != null && textGroup != null) {
-				credGroup.add(money);
+			if(credGroup != null && textGroup != null) {			credGroup.add(money);
 				textGroup.add(money);
 			}
 		}
@@ -429,11 +427,11 @@ class TitleState extends MusicBeatState
 				case 13:
 					deleteCoolText();
 				case 14:
-					addMoreText('Friday');
+					addMoreText("FNF'");
 				case 15:
-					addMoreText('Night');
+					addMoreText('Vs');
 				case 16:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+					addMoreText('Ali Alafandy'); // credTextShit.text += '\nFunkin';
 
 				case 17:
 					skipIntro();
