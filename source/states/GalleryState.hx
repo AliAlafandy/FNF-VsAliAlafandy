@@ -17,7 +17,7 @@ class GalleryState extends MusicBeatState
 	var itemGroup:FlxTypedGroup<GalleryImage>;
 	var uiGroup:FlxSpriteGroup;
 
-	var galleryStuff:Array<Array<String>>;
+	galleryStuff = [];// Array<Array<String>>
 
 	var bg:FlxSprite;
 	
@@ -142,16 +142,14 @@ class GalleryState extends MusicBeatState
 	{
 		currentIndex = FlxMath.wrap(currentIndex + i, 0, galleryStuff.length - 1);
 
-		galleryText.text = galleryStuff[i][0];
-		descText.text = galleryStuff[i][2];
+		galleryText.text = galleryStuff[currentIndex][0];
+		descText.text = galleryStuff[currentIndex][2];
 
 		var change = 0;
 
 		for (item in itemGroup) {
 			item.posX = change++ - currentIndex;
-			item.alpha = 1;
-			if (item.ID == currentIndex)
-				item.alpha = 0.6;
+			item.alpha = (item.ID == currentIndex) ? 1 : 0.6;
 		}
 	}
 }
