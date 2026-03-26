@@ -20,9 +20,12 @@ class GalleryState extends MusicBeatState
 	var galleryStuff:Array<Array<String>>;
 
 	var bg:FlxSprite;
+	
 	var galleryText:FlxText;
 	var descText:FlxText;
-	var bars:FlxSprite;
+	
+	var topBG:FlxSprite;
+	var bottomBG:FlxSprite;
 
 	var currentIndex:Int = 0;
 	var allowInputs:Bool = true;
@@ -79,8 +82,11 @@ class GalleryState extends MusicBeatState
 			itemGroup.add(newItem);
 		}
 
-		bars = new FlxSprite().loadGraphic(Paths.image("gallery/ui/bars"));
-		uiGroup.add(bars);
+		topBG = new FlxSprite(0, FlxG.height + 66).makeGraphic(FlxG.width, 66, 0xFF000000);
+		uiGroup.add(topBG);
+
+		bottomBG = new FlxSprite(0, FlxG.height - 66).makeGraphic(FlxG.width, 66, 0xFF000000);
+		uiGroup.add(bottomBG);
 
 		galleryText = new FlxText(50, -100, FlxG.width - 100, "");
 		galleryText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.BLUE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
