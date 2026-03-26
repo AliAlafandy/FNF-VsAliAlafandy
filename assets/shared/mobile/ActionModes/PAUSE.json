@@ -2,7 +2,7 @@
   "buttons": [
     {
       "button": "buttonP",
-      "graphic": "pause",
+      "graphic": "PAUSE",
       "x": 1156,
       "y": 2,
       "color": "0xF1F1F1"
