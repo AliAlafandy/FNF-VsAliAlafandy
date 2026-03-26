@@ -82,7 +82,7 @@ class GalleryState extends MusicBeatState
 			itemGroup.add(newItem);
 		}
 
-		topBG = new FlxSprite(0, FlxG.height + 66).makeGraphic(FlxG.width, 66, 0xFF000000);
+		topBG = new FlxSprite(0, FlxG.height - 6).makeGraphic(FlxG.width, 66, 0xFF000000);
 		uiGroup.add(topBG);
 
 		bottomBG = new FlxSprite(0, FlxG.height - 66).makeGraphic(FlxG.width, 66, 0xFF000000);
