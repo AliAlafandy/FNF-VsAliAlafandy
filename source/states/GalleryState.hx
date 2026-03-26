@@ -27,7 +27,7 @@ class GalleryState extends MusicBeatState
 	var currentIndex:Int = 0;
 	var allowInputs:Bool = true;
 
-	override public function create()
+	override function create()
 	{
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
@@ -74,6 +74,7 @@ class GalleryState extends MusicBeatState
 
 			var newItem = new GalleryImage();
 			newItem.loadGraphic(Paths.image(imagePath + galleryStuff[i][1]));
+			// newItem.screenCenter();
 			newItem.ID = i;
 			itemGroup.add(newItem);
 		}
@@ -102,7 +103,7 @@ class GalleryState extends MusicBeatState
 		super.create();
 	}
 
-	override public function update(elapsed:Float)
+	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
@@ -131,7 +132,7 @@ class GalleryState extends MusicBeatState
 		}*/
 	}
 
-	private function changeSelection(i:Int = 0)
+	function changeSelection(i:Int = 0)
 	{
 		currentIndex = FlxMath.wrap(currentIndex + i, 0, galleryStuff.length - 1);
 
@@ -161,7 +162,7 @@ class GalleryImage extends FlxSprite
 	}
 }
 
-function boundTo(value:Float, min:Float, max:Float):Float
+private function boundTo(value:Float, min:Float, max:Float):Float
 {
 	var newValue:Float = value;
 
