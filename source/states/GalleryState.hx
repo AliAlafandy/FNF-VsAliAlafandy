@@ -15,6 +15,7 @@ import haxe.Json;
 class GalleryState extends MusicBeatState
 {
 	var itemGroup:FlxTypedGroup<GalleryImage>;
+	var uiGroup:FlxSpriteGroup;
 
 	var galleryStuff:Array<Array<String>>;
 
@@ -26,10 +27,13 @@ class GalleryState extends MusicBeatState
 	var currentIndex:Int = 0;
 	var allowInputs:Bool = true;
 
-	var uiGroup:FlxSpriteGroup;
-
 	override public function create()
 	{
+		#if DISCORD_ALLOWED
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Menus", null);
+		#end
+
 		persistentUpdate = true;
 		bg = new FlxSprite().loadGraphic(Paths.image("menuDesat"));
 		bg.antialiasing = ClientPrefs.data.antialiasing;
@@ -59,7 +63,7 @@ class GalleryState extends MusicBeatState
 			['AliOX', 'aliOX', 'Blue Fox from Smiling Critters.'] // https://www.youtube.com/@alialafandyarabic
 		];
 
-		for (i in defaultList)
+		for(i in defaultList)
 		{
 			galleryStuff.push(i);
 		}
