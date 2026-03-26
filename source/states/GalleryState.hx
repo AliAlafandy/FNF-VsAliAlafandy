@@ -17,7 +17,7 @@ class GalleryState extends MusicBeatState
 	var itemGroup:FlxTypedGroup<GalleryImage>;
 	var uiGroup:FlxSpriteGroup;
 
-	galleryStuff = [];// Array<Array<String>>
+	var galleryStuff:Array<Array<String>> = [];
 
 	var bg:FlxSprite;
 	
