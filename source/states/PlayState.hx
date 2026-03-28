@@ -676,6 +676,14 @@ class PlayState extends MusicBeatState
 		autoPlay.frames = Paths.getSparrowAtlas('youtubehud/autoPlay');
 		autoPlay.animation.addByPrefix('off', "Auto Play Off", 24);
 		autoPlay.animation.addByPrefix('on', "Auto Play On", 24);
+
+		if (isStoryMode)
+		{
+			autoPlay.animation.play('on');
+		} else {
+			autoPlay.animation.play('off');
+		}
+
 		autoPlay.updateHitbox();
 		autoPlay.visible = showTime;
 		autoPlay.setGraphicSize(Std.int(autoPlay.width * 0.45));
@@ -697,6 +705,14 @@ class PlayState extends MusicBeatState
 		fullScreen.frames = Paths.getSparrowAtlas('youtubehud/fullScreen');
 		fullScreen.animation.addByPrefix('off', "Full Screen Off", 24);
 		fullScreen.animation.addByPrefix('on', "Full Screen On", 24);
+
+		if (isStoryMode)
+		{
+			fullScreen.animation.play('on');
+		} else {
+			fullScreen.animation.play('off');
+		}
+
 		fullScreen.updateHitbox();
 		fullScreen.visible = showTime;
 		fullScreen.setGraphicSize(Std.int(fullScreen.width * 0.8));
