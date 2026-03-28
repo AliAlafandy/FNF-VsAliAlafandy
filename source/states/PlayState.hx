@@ -714,7 +714,7 @@ class PlayState extends MusicBeatState
 		fullScreen.animation.addByPrefix('off', "Full Screen Off", 24);
 		fullScreen.animation.addByPrefix('on', "Full Screen On", 24);
 
-		if (FlxG.fullScreen)
+		if (FlxG.fullscreen)
 		{
 			fullScreen.animation.play('on');
 		} else {
