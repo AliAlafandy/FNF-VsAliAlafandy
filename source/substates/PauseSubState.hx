@@ -96,6 +96,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		var pauseZone:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('youtubehud/pauseVideo'));
 		pauseZone.updateHitbox();
+		pauseZone.alpha = 0.6;
 		pauseZone.screenCenter(); // XY
 		add(pauseZone);
 
