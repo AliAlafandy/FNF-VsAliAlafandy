@@ -210,6 +210,13 @@ class PlayState extends MusicBeatState
 	public var logo:FlxSprite;
 	public var videoMark:FlxSprite;
 
+	//Youtube Hud
+	public var playZone:FlxSprite; // public var playVideo:FlxSprite;
+	public var autoPlay:FlxSprite;
+	public var subTitle:FlxSprite;
+	public var setTings:FlxSprite;
+	public var fullScreen:FlxSprite;
+
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
 	public var camHUD:FlxCamera;
@@ -500,11 +507,11 @@ class PlayState extends MusicBeatState
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
-		timeTxt = new FlxText(-15, 19, 400, "", 32); // STRUM_X + (FlxG.width / 2) - 248
+		timeTxt = new FlxText(-10, 19, 400, "", 32); // STRUM_X + (FlxG.width / 2) - 248
 		timeTxt.setFormat(Paths.font("google.ttf"), 32, FlxColor.WHITE, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
-		// timeTxt.x -= 15;
+		// timeTxt.x -= 10;
 		timeTxt.y = 665;
 		timeTxt.borderSize = 2;
 		timeTxt.visible = updateTime = showTime;
@@ -649,6 +656,51 @@ class PlayState extends MusicBeatState
 		// logo.color = FlxColor.BLACK;
 
 		specialGroup.add(logo);
+
+		/*playVideo = new FlxSprite(59, 674);
+		playVideo.frames = Paths.getSparrowAtlas('youtubehud/playVideo');
+		playVideo.animation.addByPrefix('play', "PLAY", 24);
+		playVideo.animation.addByPrefix('pause', "PAUSE", 24);
+		playVideo.updateHitbox();
+		playVideo.visible = showTime;
+		playVideo.setGraphicSize(Std.int(playVideo.width * 0.8));
+		specialGroup.add(playVideo);*/
+
+		playZone = new FlxSprite(60, 675).loadGraphic(Paths.image('youtubehud/playButtons'));
+		playZone.updateHitbox();
+		playZone.visible = showTime;
+		playZone.setGraphicSize(Std.int(playZone.width * 1.3));
+		specialGroup.add(playZone);
+
+		autoPlay = new FlxSprite(1060, 663);
+		autoPlay.frames = Paths.getSparrowAtlas('youtubehud/autoPlay');
+		autoPlay.animation.addByPrefix('off', "Auto Play Off", 24);
+		autoPlay.animation.addByPrefix('on', "Auto Play On", 24);
+		autoPlay.updateHitbox();
+		autoPlay.visible = showTime;
+		autoPlay.setGraphicSize(Std.int(autoPlay.width * 0.45));
+		specialGroup.add(autoPlay);
+
+		subTitle = new FlxSprite(1140, 663).loadGraphic(Paths.image('youtubehud/subtitleButton'));
+		subTitle.updateHitbox();
+		subTitle.visible = showTime;
+		subTitle.setGraphicSize(Std.int(subTitle.width * 0.45));
+		specialGroup.add(subTitle);
+
+		setTings = new FlxSprite(1140, 663).loadGraphic(Paths.image('youtubehud/settingsButton'));
+		setTings.updateHitbox();
+		setTings.visible = showTime;
+		setTings.setGraphicSize(Std.int(setTings.width * 0.45));
+		specialGroup.add(setTings);
+
+		fullScreen = new FlxSprite(1180, 663);
+		fullScreen.frames = Paths.getSparrowAtlas('youtubehud/fullScreen');
+		fullScreen.animation.addByPrefix('off', "Full Screen Off", 24);
+		fullScreen.animation.addByPrefix('on', "Full Screen On", 24);
+		fullScreen.updateHitbox();
+		fullScreen.visible = showTime;
+		fullScreen.setGraphicSize(Std.int(fullScreen.width * 0.8));
+		specialGroup.add(fullScreen);
 
 		if(ClientPrefs.data.downScroll == false)
 		{
