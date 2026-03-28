@@ -662,6 +662,14 @@ class PlayState extends MusicBeatState
 		playVideo.animation.addByPrefix('play', "PLAY", 24);
 		playVideo.animation.addByPrefix('pause', "PAUSE", 24);
 		playVideo.updateHitbox();
+
+		if (pause)
+		{
+			playVideo.animation.play('play');
+		} else {
+			playVideo.animation.play('pause');
+		}
+
 		playVideo.visible = showTime;
 		playVideo.setGraphicSize(Std.int(playVideo.width * 0.8));
 		specialGroup.add(playVideo);*/
@@ -706,7 +714,7 @@ class PlayState extends MusicBeatState
 		fullScreen.animation.addByPrefix('off', "Full Screen Off", 24);
 		fullScreen.animation.addByPrefix('on', "Full Screen On", 24);
 
-		if (isStoryMode)
+		if (FlxG.fullScreen)
 		{
 			fullScreen.animation.play('on');
 		} else {
