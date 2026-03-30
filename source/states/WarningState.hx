@@ -5,7 +5,9 @@ import flixel.FlxG;
 
 import flixel.text.FlxText;
 import flixel.effects.FlxFlicker;
+
 import lime.app.Application;
+
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionableState;
@@ -180,8 +182,8 @@ class WarningState extends MusicBeatState
 			return kbRam / (1024 * 1024);
 		}
 		#elseif mobile
-		// return 4;
-		return lime.system.System.totalMemory / (1024 * 1024 * 1024);
+		return 4;
+		// return lime.system.System.totalMemory / (1024 * 1024 * 1024);
 		#end
 
 		return 0;
