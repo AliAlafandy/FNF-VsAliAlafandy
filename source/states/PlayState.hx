@@ -683,7 +683,7 @@ class PlayState extends MusicBeatState
 		specialGroup.add(playZone);
 
 		var rightCornerX:Int = 1000;
-		var rightCornerY:Int = 630;
+		var rightCornerY:Int = 633;
 
 		autoPlay = new FlxSprite(rightCornerX + 30, rightCornerY);
 		autoPlay.frames = Paths.getSparrowAtlas('youtubehud/autoPlay');
