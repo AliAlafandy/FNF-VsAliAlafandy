@@ -75,17 +75,17 @@ class WarningState extends MusicBeatState
 			You've been warned!";
 		#end
 
-		if (ramGB < 3.49)
+		if (ramGB < 6) // 3.49
 		{
 			#if mobile
 			warnTextMobile = new FlxText(0, 0, FlxG.width, warnMobile, 32);
 			warnTextMobile.setFormat("VCR OSD Mono", 32, FlxColor.CYAN, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			warnTextMobile.screenCenter(Y);
+			warnTextMobile.screenCenter(XY);
 			add(warnTextMobile);
 			#else
 			warnText = new FlxText(0, 0, FlxG.width, warn, 32);
 			warnText.setFormat("VCR OSD Mono", 32, FlxColor.CYAN, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			warnText.screenCenter(Y);
+			warnText.screenCenter(XY);
 			add(warnText);
 			#end
 
@@ -94,12 +94,12 @@ class WarningState extends MusicBeatState
 			#if mobile
 			warnTextMobile = new FlxText(0, 0, FlxG.width, guhMobile, 32);
 			warnTextMobile.setFormat("VCR OSD Mono", 32, FlxColor.CYAN, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			warnTextMobile.screenCenter(Y);
+			warnTextMobile.screenCenter(XY);
 			add(warnTextMobile);
 			#else
 			warnText = new FlxText(0, 0, FlxG.width, guh, 32);
 			warnText.setFormat("VCR OSD Mono", 32, FlxColor.CYAN, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			warnText.screenCenter(Y);
+			warnText.screenCenter(XY);
 			add(warnText);
 			#end
 
@@ -119,6 +119,7 @@ class WarningState extends MusicBeatState
 				leftState = true;
 				FlxTransitionableState.skipNextTransIn = true;
 				FlxTransitionableState.skipNextTransOut = true;
+	
 				if(!back) {
 					ClientPrefs.data.flashing = false;
 					ClientPrefs.saveSettings();
