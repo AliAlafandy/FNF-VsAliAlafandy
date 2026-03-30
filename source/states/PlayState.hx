@@ -507,11 +507,11 @@ class PlayState extends MusicBeatState
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
-		timeTxt = new FlxText(10, 19, 400, "", 32); // STRUM_X + (FlxG.width / 2) - 248
+		timeTxt = new FlxText(50, 19, 400, "", 32); // STRUM_X + (FlxG.width / 2) - 248
 		timeTxt.setFormat(Paths.font("google.ttf"), 32, FlxColor.WHITE, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
-		// timeTxt.x += 10;
+		// timeTxt.x += 50;
 		timeTxt.y = 665;
 		timeTxt.borderSize = 2;
 		timeTxt.visible = updateTime = showTime;
@@ -675,7 +675,7 @@ class PlayState extends MusicBeatState
 		playVideo.setGraphicSize(Std.int(playVideo.width * 0.8));
 		specialGroup.add(playVideo);*/
 
-		playZone = new FlxSprite(80, 677).loadGraphic(Paths.image('youtubehud/playButtons')); // 60, 675
+		playZone = new FlxSprite(70, 678).loadGraphic(Paths.image('youtubehud/playButtons')); // 60, 675
 		playZone.updateHitbox();
 		playZone.alpha = 0;
 		playZone.visible = showTime;
