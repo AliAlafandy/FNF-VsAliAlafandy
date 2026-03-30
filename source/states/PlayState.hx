@@ -507,7 +507,7 @@ class PlayState extends MusicBeatState
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
-		timeTxt = new FlxText(0, 19, 400, "", 32); // STRUM_X + (FlxG.width / 2) - 248
+		timeTxt = new FlxText(10, 19, 400, "", 32); // STRUM_X + (FlxG.width / 2) - 248
 		timeTxt.setFormat(Paths.font("google.ttf"), 32, FlxColor.WHITE, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
@@ -661,7 +661,6 @@ class PlayState extends MusicBeatState
 		playVideo.frames = Paths.getSparrowAtlas('youtubehud/playVideo');
 		playVideo.animation.addByPrefix('play', "PLAY", 24);
 		playVideo.animation.addByPrefix('pause', "PAUSE", 24);
-		playVideo.updateHitbox();
 
 		if (pause)
 		{
@@ -670,6 +669,8 @@ class PlayState extends MusicBeatState
 			playVideo.animation.play('pause');
 		}
 
+		playVideo.updateHitbox();
+		playVideo.alpha = 0;
 		playVideo.visible = showTime;
 		playVideo.setGraphicSize(Std.int(playVideo.width * 0.8));
 		specialGroup.add(playVideo);*/
@@ -1473,8 +1474,16 @@ class PlayState extends MusicBeatState
 
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
+		
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		// FlxTween.tween(playVideo, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(playZone, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(autoPlay, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(subTitle, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(setTings, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(fullScreen, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence (with Time Left)
@@ -2643,6 +2652,13 @@ class PlayState extends MusicBeatState
 
 		timeBar.visible = false;
 		timeTxt.visible = false;
+		//playVideo.visible = false;
+		playZone.visible = false;
+		autoPlay.visible = false;
+		subTitle.visible = false;
+		setTings.visible = false;
+		fullScreen.visible = false;
+		
 		canPause = false;
 		endingSong = true;
 		camZooming = false;
