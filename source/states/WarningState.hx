@@ -42,16 +42,17 @@ class WarningState extends MusicBeatState
 		add(grid);
 
 		var ramGB:Float = Math.round(getSystemRAM() * 100) / 100;
+		var ramGuide:Float = 6;
 
 		#if mobile
-		var warnMobile:String = "Hey, yoo!!\n" +
-			"This Mod needs at least 4 GB of RAM to run nicely.\n" +
-			"System Detected RAM: " + ramGB + " GB.\n" +
-			"Also,\n" +
-			"This Mod contains some flashing lights!\n" +
-			"Press A to continue and disable them now or go to Options Menu.\n" +
-			"Press B to ignore this message.\n" +
-			"You've been warned!";
+		var warnMobile:String = "Hey, yoo!!\n
+			This Mod needs at least " + ramGuide + " GB of RAM to run nicely.\n
+			System Detected RAM: " + ramGB + " GB.\n
+			Also,\n
+			This Mod contains some flashing lights!\n
+			Press A to continue and disable them now or go to Options Menu.\n
+			Press B to ignore this message.\n
+			You've been warned!";
 
 		var guhMobile:String = "Hey, yoo!!\n
 			This Mod contains some flashing lights!\n
@@ -59,14 +60,14 @@ class WarningState extends MusicBeatState
 			Press B to ignore this message.\n
 			You've been warned!";
 		#else
-		var warn:String = "Hey, yoo!!\n" +
-			"This Mod needs at least 4 GB of RAM to run nicely.\n" +
-			"System Detected RAM: " + ramGB + " GB.\n" +
-			"Also,\n" +
-			"This Mod contains some flashing lights!\n" +
-			"Press ENTER to continue and disable them now or go to Options Menu.\n" +
-			"Press ESCAPE to ignore this message.\n" +
-			"You've been warned!";
+		var warn:String = "Hey, yoo!!\n
+			This Mod needs at least " + ramGuide + " GB of RAM to run nicely.\n
+			System Detected RAM: " + ramGB + " GB.\n
+			Also,\n
+			This Mod contains some flashing lights!\n
+			Press ENTER to continue and disable them now or go to Options Menu.\n
+			Press ESCAPE to ignore this message.\n
+			You've been warned!";
 
 		var guh:String = "Hey, yoo!!\n
 			This Mod contains some flashing lights!\n
@@ -75,7 +76,7 @@ class WarningState extends MusicBeatState
 			You've been warned!";
 		#end
 
-		if (ramGB < 6) // 3.49
+		if (ramGB < ramGuide) // 3.49
 		{
 			#if mobile
 			warnTextMobile = new FlxText(0, 0, FlxG.width, warnMobile, 32);
