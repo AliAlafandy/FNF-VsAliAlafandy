@@ -648,7 +648,8 @@ class PlayState extends MusicBeatState
 		logo.animation.addByPrefix('bump', 'logo bumpin0', 24, false);
 		logo.animation.play('bump');
 		logo.updateHitbox();
-		logo.setGraphicSize(Std.int(logo.width * 0.4));
+		logo.scale.set(0.4, 0.4);
+		// logo.setGraphicSize(Std.int(logo.width * 0.4));
 		// logo.scale.x = 0.4;
 		// logo.scale.y = 0.4;
 		logo.alpha = 0.6;
@@ -672,20 +673,22 @@ class PlayState extends MusicBeatState
 		playVideo.updateHitbox();
 		playVideo.alpha = 0;
 		playVideo.visible = showTime;
-		playVideo.setGraphicSize(Std.int(playVideo.width * 0.8));
+		playVideo.scale.set(0.8, 0.8);
+		// playVideo.setGraphicSize(Std.int(playVideo.width * 0.8));
 		specialGroup.add(playVideo);*/
 
 		playZone = new FlxSprite(70, 678).loadGraphic(Paths.image('youtubehud/playButtons')); // 60, 675
 		playZone.updateHitbox();
 		playZone.alpha = 0;
 		playZone.visible = showTime;
-		playZone.setGraphicSize(Std.int(playZone.width * 1.3));
+		playZone.scale.set(1.3, 1.3);
+		// playZone.setGraphicSize(Std.int(playZone.width * 1.3));
 		specialGroup.add(playZone);
 
 		var rightCornerX:Int = 1000;
-		var rightCornerY:Int = 633;
+		var rightCornerY:Int = 633; // 663
 
-		autoPlay = new FlxSprite(rightCornerX + 30, rightCornerY);
+		autoPlay = new FlxSprite(rightCornerX + 30, rightCornerY); // rightCornerX + 60
 		autoPlay.frames = Paths.getSparrowAtlas('youtubehud/autoPlay');
 		autoPlay.animation.addByPrefix('off', "Auto Play Off", 24);
 		autoPlay.animation.addByPrefix('on', "Auto Play On", 24);
@@ -700,24 +703,27 @@ class PlayState extends MusicBeatState
 		autoPlay.updateHitbox();
 		autoPlay.alpha = 0;
 		autoPlay.visible = showTime;
-		autoPlay.setGraphicSize(Std.int(autoPlay.width * 0.45));
+		autoPlay.scale.set(0.45, 0.45);
+		// autoPlay.setGraphicSize(Std.int(autoPlay.width * 0.45));
 		specialGroup.add(autoPlay);
 
-		subTitle = new FlxSprite(rightCornerX + 70, rightCornerY).loadGraphic(Paths.image('youtubehud/subtitleButton'));
+		subTitle = new FlxSprite(rightCornerX + 70, rightCornerY).loadGraphic(Paths.image('youtubehud/subtitleButton')); // rightCornerX + 100
 		subTitle.updateHitbox();
 		subTitle.alpha = 0;
 		subTitle.visible = showTime;
-		subTitle.setGraphicSize(Std.int(subTitle.width * 0.45));
+		subTitle.scale.set(0.45, 0.45);
+		// subTitle.setGraphicSize(Std.int(subTitle.width * 0.45));
 		specialGroup.add(subTitle);
 
-		setTings = new FlxSprite(rightCornerX + 110, rightCornerY).loadGraphic(Paths.image('youtubehud/settingsButton'));
+		setTings = new FlxSprite(rightCornerX + 110, rightCornerY).loadGraphic(Paths.image('youtubehud/settingsButton')); // rightCornerX + 140
 		setTings.updateHitbox();
 		setTings.alpha = 0;
 		setTings.visible = showTime;
-		setTings.setGraphicSize(Std.int(setTings.width * 0.45));
+		setTings.scale.set(0.45, 0.45);
+		// setTings.setGraphicSize(Std.int(setTings.width * 0.45));
 		specialGroup.add(setTings);
 
-		fullScreen = new FlxSprite(rightCornerX + 150, rightCornerY);
+		fullScreen = new FlxSprite(rightCornerX + 150, rightCornerY); // rightCornerX + 180
 		fullScreen.frames = Paths.getSparrowAtlas('youtubehud/fullScreen');
 		fullScreen.animation.addByPrefix('off', "Full Screen Off", 24);
 		fullScreen.animation.addByPrefix('on', "Full Screen On", 24);
@@ -732,7 +738,8 @@ class PlayState extends MusicBeatState
 		fullScreen.updateHitbox();
 		fullScreen.alpha = 0;
 		fullScreen.visible = showTime;
-		fullScreen.setGraphicSize(Std.int(fullScreen.width * 0.45));
+		fullScreen.scale.set(0.45, 0.45);
+		// fullScreen.setGraphicSize(Std.int(fullScreen.width * 0.45));
 		specialGroup.add(fullScreen);
 
 		if(ClientPrefs.data.downScroll == false)
