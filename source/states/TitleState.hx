@@ -299,7 +299,8 @@ class TitleState extends MusicBeatState
 		alafandyLogo = new FlxSprite(0, 200).loadGraphic(Paths.image('alafandy_logo'));
 		add(alafandyLogo);
 		alafandyLogo.visible = false;
-		alafandyLogo.setGraphicSize(Std.int(alafandyLogo.width * 0.8));
+		alafandyLogo.scale.set(0.8, 0.8);
+		// alafandyLogo.setGraphicSize(Std.int(alafandyLogo.width * 0.8));
 		alafandyLogo.updateHitbox();
 		alafandyLogo.screenCenter(X);
 		alafandyLogo.antialiasing = ClientPrefs.data.antialiasing;
