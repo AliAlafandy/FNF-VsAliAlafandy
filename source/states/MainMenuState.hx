@@ -107,6 +107,7 @@ class MainMenuState extends MusicBeatState
 		char6.animation.play('menu');
 		char6.updateHitbox();
 		char6.visible = false;
+		// char6.scale.set(1, 1);
 		// char6.setGraphicSize(Std.int(char6.width * 1));
 		add(char6);
 

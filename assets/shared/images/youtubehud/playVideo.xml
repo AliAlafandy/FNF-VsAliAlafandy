@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="playVideo.png">
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="PLAY0000" x="0" y="0" width="29" height="32" frameX="2" frameY="2" frameWidth="25" frameHeight="28"/>
+	<SubTexture name="PAUSE0000" x="29" y="0" width="21" height="32" frameX="-2" frameY="2" frameWidth="25" frameHeight="28"/>
+</TextureAtlas>

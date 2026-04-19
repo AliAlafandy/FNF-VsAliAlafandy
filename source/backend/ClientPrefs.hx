@@ -17,6 +17,7 @@ import states.TitleState;
 	public var wideScreen:Bool = false;
 	#if android
 	public var storageType:String = "EXTERNAL_DATA";
+	public var pauseButton:Bool = true;
 	#end
 	public var hitboxType:String = "Gradient";
 	public var popUpRating:Bool = true;

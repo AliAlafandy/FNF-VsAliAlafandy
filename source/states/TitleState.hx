@@ -20,6 +20,18 @@ import shaders.ColorSwap;
 import states.StoryMenuState;
 import states.MainMenuState;
 
+#if VIDEOS_ALLOWED
+#if (hxCodec >= "3.0.0")
+import hxcodec.flixel.FlxVideo as VideoHandler;
+#elseif (hxCodec >= "2.6.1")
+import hxcodec.VideoHandler as VideoHandler;
+#elseif (hxCodec == "2.6.0")
+import VideoHandler;
+#else
+import vlc.MP4Handler as VideoHandler;
+#end
+#end
+
 typedef TitleData =
 {
 	titlex:Float,
@@ -120,6 +132,7 @@ class TitleState extends MusicBeatState
 		}
 
 		FlxG.mouse.visible = false;
+		
 		#if FREEPLAY
 		MusicBeatState.switchState(new FreeplayState());
 		#elseif CHARTING
@@ -131,7 +144,7 @@ class TitleState extends MusicBeatState
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new WarningState());
 		} else {
-			if (initialized)
+			/*if (initialized)
 				startIntro();
 			else
 			{
@@ -139,6 +152,17 @@ class TitleState extends MusicBeatState
 				{
 					startIntro();
 				});
+			}*/
+
+			if (initialized)
+             	startIntro();
+        	else
+        	{
+            	new FlxTimer().start(1, function(tmr:FlxTimer)
+            	{
+                	startVideo('alafandy_intro');
+                	trace('starting video...');
+            	});
 			}
 		}
 		#end
@@ -146,7 +170,13 @@ class TitleState extends MusicBeatState
 
 	var logoBl:FlxSprite;
 	var danceLeft:Bool = false;
+
+	#if mobile
+	var titleTextMobile:FlxSprite;
+	#else
 	var titleText:FlxSprite;
+	#end
+	
 	var swagShader:ColorSwap = null;
 
 	function startIntro()
@@ -190,6 +220,33 @@ class TitleState extends MusicBeatState
 			logoBl.shader = swagShader.shader;
 		}
 
+		#if mobile
+		titleTextMobile = new FlxSprite(titleJSON.startx - 65, titleJSON.starty);
+		titleTextMobile.frames = Paths.getSparrowAtlas('titleEnter_mobile');
+		var animFrames:Array<FlxFrame> = [];
+		@:privateAccess {
+			titleTextMobile.animation.findByPrefix(animFrames, "ENTER IDLE");
+			titleTextMobile.animation.findByPrefix(animFrames, "ENTER FREEZE");
+		}
+		
+		if (animFrames.length > 0) {
+			newTitle = true;
+			
+			titleTextMobile.animation.addByPrefix('idle', "ENTER IDLE", 24);
+			titleTextMobile.animation.addByPrefix('press', ClientPrefs.data.flashing ? "ENTER PRESSED" : "ENTER FREEZE", 24);
+		}
+		else {
+			newTitle = false;
+			
+			titleTextMobile.animation.addByPrefix('idle', "Press Enter to Begin", 24);
+			titleTextMobile.animation.addByPrefix('press', "ENTER PRESSED", 24);
+		}
+		
+		titleTextMobile.animation.play('idle');
+		titleTextMobile.updateHitbox();
+		// titleTextMobile.screenCenter(X);
+		add(titleTextMobile);
+		#else
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
 		var animFrames:Array<FlxFrame> = [];
@@ -215,6 +272,7 @@ class TitleState extends MusicBeatState
 		titleText.updateHitbox();
 		// titleText.screenCenter(X);
 		add(titleText);
+		#end
 
 		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
 		logo.antialiasing = ClientPrefs.data.antialiasing;
@@ -238,12 +296,13 @@ class TitleState extends MusicBeatState
 
 		credTextShit.visible = false;
 
-		alafandyLogo = new FlxSprite(0, 0).loadGraphic(Paths.image('alafandy_logo'));
+		alafandyLogo = new FlxSprite(0, 200).loadGraphic(Paths.image('alafandy_logo'));
 		add(alafandyLogo);
 		alafandyLogo.visible = false;
-		alafandyLogo.setGraphicSize(Std.int(alafandyLogo.width * 0.8));
+		alafandyLogo.scale.set(0.8, 0.8);
+		// alafandyLogo.setGraphicSize(Std.int(alafandyLogo.width * 0.8));
 		alafandyLogo.updateHitbox();
-		alafandyLogo.screenCenter();
+		alafandyLogo.screenCenter(X);
 		alafandyLogo.antialiasing = ClientPrefs.data.antialiasing;
 
 		if (initialized)
@@ -323,17 +382,29 @@ class TitleState extends MusicBeatState
 					timer = (-timer) + 2;
 				
 				timer = FlxEase.quadInOut(timer);
-				
+
+				#if mobile
+				titleTextMobile.color = FlxColor.interpolate(titleTextColors[0], titleTextColors[1], timer);
+				titleTextMobile.alpha = FlxMath.lerp(titleTextAlphas[0], titleTextAlphas[1], timer);
+				#else
 				titleText.color = FlxColor.interpolate(titleTextColors[0], titleTextColors[1], timer);
 				titleText.alpha = FlxMath.lerp(titleTextAlphas[0], titleTextAlphas[1], timer);
+				#end
 			}
 			
 			if(pressedEnter)
 			{
+				#if mobile
+				titleTextMobile.color = FlxColor.WHITE;
+				titleTextMobile.alpha = 1;
+
+				if(titleTextMobile != null) titleTextMobile.animation.play('press');
+				#else
 				titleText.color = FlxColor.WHITE;
 				titleText.alpha = 1;
 				
 				if(titleText != null) titleText.animation.play('press');
+				#end
 
 				FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
@@ -424,6 +495,7 @@ class TitleState extends MusicBeatState
 				case 6:
 					alafandyLogo.visible = true;
 					createCoolText([''], 40);
+					addMoreText('', 40);
 				case 8:
 					addMoreText('present', 40);
 				case 9:
@@ -454,6 +526,7 @@ class TitleState extends MusicBeatState
 
 	var skippedIntro:Bool = false;
 	var increaseVolume:Bool = false;
+	
 	function skipIntro():Void
 	{
 		if (!skippedIntro)
@@ -465,5 +538,47 @@ class TitleState extends MusicBeatState
 			}
 			skippedIntro = true;
 		}
+	}
+
+	public function startVideo(name:String)
+    {
+        #if VIDEOS_ALLOWED
+        var filepath:String = Paths.video(name);
+        #if sys
+        if(!FileSystem.exists(filepath))
+        #else
+        if(!OpenFlAssets.exists(filepath))
+        #end
+        {
+            FlxG.log.warn('Couldnt find video file: ' + name);
+            startIntro();
+            initialized = true;
+            return;
+        }
+        var video:VideoHandler = new VideoHandler();
+            #if (hxCodec >= "3.0.0")
+            // Recent versions
+            video.play(filepath);
+            video.onEndReached.add(function()
+            {
+                video.dispose();
+                startIntro();
+                initialized = true;
+                return;
+            }, true);
+            #else
+            // Older versions
+            video.playVideo(filepath);
+            video.finishCallback = function()
+            {
+                startIntro();
+                initialized = true;
+                return;
+            }
+            #end
+        #else
+        FlxG.log.warn('Platform not supported!');
+        return;
+        #end
 	}
 }

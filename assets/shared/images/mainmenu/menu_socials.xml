@@ -2,16 +2,16 @@
 <TextureAtlas imagePath="menu_socials.png">
 	<!-- Created with Adobe Animate version 22.0.5.191 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="socials basic0000" x="653" y="126" width="472" height="121" frameX="-1" frameY="-4" frameWidth="476" frameHeight="128"/>
-	<SubTexture name="socials basic0001" x="653" y="126" width="472" height="121" frameX="-1" frameY="-4" frameWidth="476" frameHeight="128"/>
-	<SubTexture name="socials basic0002" x="653" y="126" width="472" height="121" frameX="-1" frameY="-4" frameWidth="476" frameHeight="128"/>
-	<SubTexture name="socials basic0003" x="0" y="504" width="475" height="127" frameX="-3" frameY="1" frameWidth="476" frameHeight="128"/>
-	<SubTexture name="socials basic0004" x="0" y="504" width="475" height="127" frameX="-3" frameY="1" frameWidth="476" frameHeight="128"/>
-	<SubTexture name="socials basic0005" x="0" y="504" width="475" height="127" frameX="-3" frameY="1" frameWidth="476" frameHeight="128"/>
-	<SubTexture name="socials basic0006" x="653" y="0" width="478" height="126" frameX="2" frameY="-3" frameWidth="476" frameHeight="128"/>
-	<SubTexture name="socials basic0007" x="653" y="0" width="478" height="126" frameX="2" frameY="-3" frameWidth="476" frameHeight="128"/>
-	<SubTexture name="socials basic0008" x="653" y="0" width="478" height="126" frameX="2" frameY="-3" frameWidth="476" frameHeight="128"/>
-	<SubTexture name="socials white0000" x="0" y="343" width="635" height="161" frameX="-9" frameY="-7" frameWidth="654" frameHeight="174"/>
-	<SubTexture name="socials white0001" x="0" y="171" width="649" height="172" frameX="-6" frameY="1" frameWidth="654" frameHeight="174"/>
-	<SubTexture name="socials white0002" x="0" y="0" width="653" height="171" frameX="1" frameY="-4" frameWidth="654" frameHeight="174"/>
+	<SubTexture name="socials basic0000" x="689" y="0" width="531" height="135" frameX="0" frameY="5" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials basic0001" x="689" y="0" width="531" height="135" frameX="0" frameY="5" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials basic0002" x="689" y="0" width="531" height="135" frameX="0" frameY="5" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials basic0003" x="689" y="135" width="531" height="135" frameX="0" frameY="5" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials basic0004" x="689" y="135" width="531" height="135" frameX="0" frameY="5" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials basic0005" x="689" y="135" width="531" height="135" frameX="0" frameY="5" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials basic0006" x="0" y="500" width="531" height="135" frameX="0" frameY="5" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials basic0007" x="0" y="500" width="531" height="135" frameX="0" frameY="5" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials basic0008" x="0" y="500" width="531" height="135" frameX="0" frameY="5" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials white0000" x="0" y="168" width="689" height="166" frameX="71" frameY="20" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials white0001" x="0" y="334" width="689" height="166" frameX="71" frameY="20" frameWidth="686" frameHeight="166"/>
+	<SubTexture name="socials white0002" x="0" y="0" width="689" height="168" frameX="71" frameY="22" frameWidth="686" frameHeight="166"/>
 </TextureAtlas>

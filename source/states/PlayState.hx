@@ -207,6 +207,16 @@ class PlayState extends MusicBeatState
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
 
+	public var logo:FlxSprite;
+	public var videoMark:FlxSprite;
+
+	//Youtube Hud
+	public var playZone:FlxSprite; // public var playVideo:FlxSprite;
+	public var autoPlay:FlxSprite;
+	public var subTitle:FlxSprite;
+	public var setTings:FlxSprite;
+	public var fullScreen:FlxSprite;
+
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
 	public var camHUD:FlxCamera;
@@ -486,17 +496,28 @@ class PlayState extends MusicBeatState
 		add(noteGroup);
 		uiGroup = new FlxSpriteGroup();
 		add(uiGroup);
+		specialGroup = new FlxSpriteGroup();
+		add(specialGroup);
+
+		videoMark = new FlxSprite(0, 0).loadGraphic(Paths.image('waterMark'));
+		videoMark.antialiasing = ClientPrefs.data.antialiasing;
+		// videoMark.visible = true;
+		videoMark.updateHitbox();
+		specialGroup.add(videoMark);
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
-		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
-		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt = new FlxText(50, 19, 400, "", 32); // STRUM_X + (FlxG.width / 2) - 248
+		timeTxt.setFormat(Paths.font("google.ttf"), 32, FlxColor.WHITE, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
+		// timeTxt.x += 50;
+		timeTxt.y = 665;
 		timeTxt.borderSize = 2;
 		timeTxt.visible = updateTime = showTime;
 		
-		if(ClientPrefs.data.downScroll) timeTxt.y = FlxG.height - 44;
+		// if(ClientPrefs.data.downScroll) timeTxt.y = FlxG.height - 44;
+		
 		if(ClientPrefs.data.timeBarType == 'Song Name')
 		{
 			switch (ClientPrefs.data.botplayName) {
@@ -509,22 +530,25 @@ class PlayState extends MusicBeatState
 		}
 
 		timeBar = new Bar(0, timeTxt.y + (timeTxt.height / 4), 'timeBar', function() return songPercent, 0, 1);
+		timeBar.setColors(FlxColor.RED, FlxColor.WHITE);
 		timeBar.scrollFactor.set();
 		timeBar.screenCenter(X);
 		timeBar.alpha = 0;
+		timeBar.y = 640;
+		timeBar.scale.x = 3;
 		timeBar.visible = showTime;
 		
-		uiGroup.add(timeBar);
-		uiGroup.add(timeTxt);
+		specialGroup.add(timeBar);
+		specialGroup.add(timeTxt);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		noteGroup.add(strumLineNotes);
 
-		if(ClientPrefs.data.timeBarType == 'Song Name')
+		/*if(ClientPrefs.data.timeBarType == 'Song Name')
 		{
 			timeTxt.size = 24;
 			timeTxt.y += 3;
-		}
+		}*/
 
 		var splash:NoteSplash = new NoteSplash(100, 100);
 		splash.setupNoteSplash(100, 100);
@@ -557,12 +581,13 @@ class PlayState extends MusicBeatState
 		moveCameraSection();
 
 		healthBar = new Bar(0, FlxG.height * (!ClientPrefs.data.downScroll ? 0.89 : 0.11), 'healthBar', function() return health, 0, 2);
+		healthBar.setColors(0xFF0000FF, 0xFF5DED2A);
 		healthBar.screenCenter(X);
 		healthBar.leftToRight = false;
 		healthBar.scrollFactor.set();
 		healthBar.visible = !ClientPrefs.data.hideHud;
 		healthBar.alpha = ClientPrefs.data.healthBarAlpha;
-		reloadHealthBarColors();
+		// reloadHealthBarColors();
 		uiGroup.add(healthBar);
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
@@ -616,16 +641,130 @@ class PlayState extends MusicBeatState
 			botplayTxt.y = timeBar.y - 78;
 		}
 
+		logo = new FlxSprite(640, -190); // 920, 20
+		logo.frames = Paths.getSparrowAtlas('logoBumpin');
+		logo.antialiasing = ClientPrefs.data.antialiasing;
+
+		logo.animation.addByPrefix('bump', 'logo bumpin0', 24, false);
+		logo.animation.play('bump');
+		logo.updateHitbox();
+		logo.scale.set(0.4, 0.4);
+		// logo.setGraphicSize(Std.int(logo.width * 0.4));
+		// logo.scale.x = 0.4;
+		// logo.scale.y = 0.4;
+		logo.alpha = 0.6;
+		// logo.screenCenter();
+		// logo.color = FlxColor.BLACK;
+
+		specialGroup.add(logo);
+
+		/*playVideo = new FlxSprite(59, 674);
+		playVideo.frames = Paths.getSparrowAtlas('youtubehud/playVideo');
+		playVideo.animation.addByPrefix('play', "PLAY", 24);
+		playVideo.animation.addByPrefix('pause', "PAUSE", 24);
+
+		if (pause)
+		{
+			playVideo.animation.play('play');
+		} else {
+			playVideo.animation.play('pause');
+		}
+
+		playVideo.updateHitbox();
+		playVideo.alpha = 0;
+		playVideo.visible = showTime;
+		playVideo.scale.set(0.8, 0.8);
+		// playVideo.setGraphicSize(Std.int(playVideo.width * 0.8));
+		specialGroup.add(playVideo);*/
+
+		playZone = new FlxSprite(70, 678).loadGraphic(Paths.image('youtubehud/playButtons')); // 60, 675
+		playZone.updateHitbox();
+		playZone.alpha = 0;
+		playZone.visible = showTime;
+		playZone.scale.set(1.3, 1.3);
+		// playZone.setGraphicSize(Std.int(playZone.width * 1.3));
+		specialGroup.add(playZone);
+
+		var rightCornerX:Int = 1000;
+		var rightCornerY:Int = 635; // 663
+
+		autoPlay = new FlxSprite(rightCornerX + 30, rightCornerY); // rightCornerX + 60
+		autoPlay.frames = Paths.getSparrowAtlas('youtubehud/autoPlay');
+		autoPlay.animation.addByPrefix('off', "Auto Play Off", 24);
+		autoPlay.animation.addByPrefix('on', "Auto Play On", 24);
+
+		if (isStoryMode)
+		{
+			autoPlay.animation.play('on');
+		} else {
+			autoPlay.animation.play('off');
+		}
+
+		autoPlay.updateHitbox();
+		autoPlay.alpha = 0;
+		autoPlay.visible = showTime;
+		autoPlay.scale.set(0.45, 0.45);
+		// autoPlay.setGraphicSize(Std.int(autoPlay.width * 0.45));
+		specialGroup.add(autoPlay);
+
+		subTitle = new FlxSprite(rightCornerX + 70, rightCornerY).loadGraphic(Paths.image('youtubehud/subtitleButton')); // rightCornerX + 100
+		subTitle.updateHitbox();
+		subTitle.alpha = 0;
+		subTitle.visible = showTime;
+		subTitle.scale.set(0.45, 0.45);
+		// subTitle.setGraphicSize(Std.int(subTitle.width * 0.45));
+		specialGroup.add(subTitle);
+
+		setTings = new FlxSprite(rightCornerX + 110, rightCornerY).loadGraphic(Paths.image('youtubehud/settingsButton')); // rightCornerX + 140
+		setTings.updateHitbox();
+		setTings.alpha = 0;
+		setTings.visible = showTime;
+		setTings.scale.set(0.45, 0.45);
+		// setTings.setGraphicSize(Std.int(setTings.width * 0.45));
+		specialGroup.add(setTings);
+
+		fullScreen = new FlxSprite(rightCornerX + 150, rightCornerY); // rightCornerX + 180
+		fullScreen.frames = Paths.getSparrowAtlas('youtubehud/fullScreen');
+		fullScreen.animation.addByPrefix('off', "Full Screen Off", 24);
+		fullScreen.animation.addByPrefix('on', "Full Screen On", 24);
+
+		if (FlxG.fullscreen)
+		{
+			fullScreen.animation.play('on');
+		} else {
+			fullScreen.animation.play('off');
+		}
+
+		fullScreen.updateHitbox();
+		fullScreen.alpha = 0;
+		fullScreen.visible = showTime;
+		fullScreen.scale.set(0.45, 0.45);
+		// fullScreen.setGraphicSize(Std.int(fullScreen.width * 0.45));
+		specialGroup.add(fullScreen);
+
+		if(ClientPrefs.data.downScroll == false)
+		{
+			scoreTxt.y = 610;
+			iconP1.y = 500;
+			iconP2.y = 500;
+			healthBar.y = 560;
+		} else {
+			scoreTxt.y = 610 - 450;
+			iconP1.y = 500 - 450;
+			iconP2.y = 500 - 450;
+			healthBar.y = 560 - 450;
+		}
+
 		uiGroup.cameras = [camHUD];
 		noteGroup.cameras = [camHUD];
 		comboGroup.cameras = [camHUD];
+		specialGroup.cameras = [camOther];
 
 		startingSong = true;
 
 		switch (ClientPrefs.data.hudColor) {
-			case 'Time Bar Only':
-				reloadTimeBarColor();
-			
+			/*case 'Time Bar Only':
+				reloadTimeBarColor();*/
 			case 'On':
 				reloadHUDColor();
 		}
@@ -671,6 +810,9 @@ class PlayState extends MusicBeatState
 
 		#if mobile
 		addMobileControls();
+		mobileControls.instance.visible = true;
+		mobileControls.onButtonDown.add(onButtonPress);
+		mobileControls.onButtonUp.add(onButtonRelease);
 		#end
 
 		startCallback();
@@ -697,7 +839,17 @@ class PlayState extends MusicBeatState
 		cachePopUpScore();
 
 		#if mobile
-		addTouchPad("NONE", "P");
+		#if android
+		if (ClientPrefs.data.pauseButton == true) {
+			addTouchPad("NONE", "PAUSE");
+			touchPad.buttonP.color = 0xFFF1F1F1;
+		} else {
+			addTouchPad("NONE", "NONE");
+		}
+		#else
+		addTouchPad("NONE", "PAUSE");
+		touchPad.buttonP.color = 0xFFF1F1F1;
+		#end
  		addTouchPadCamera();
 		#end
 
@@ -786,15 +938,15 @@ class PlayState extends MusicBeatState
 		var dadColor = FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
 
     	if (dadColor == FlxColor.BLACK) {
-        	timeTxt.color = 0xFFFFFFFF;
-        	timeBar.setColors(0xFFFFFFFF);
+        	// timeTxt.color = 0xFFFFFFFF;
+        	// timeBar.setColors(0xFFFFFFFF);
         	scoreTxt.color = 0xFFFFFFFF;
         	botplayTxt.color = 0xFFFFFFFF;
     	} else {
         	var hudColor = FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
 			
-        	timeTxt.color = hudColor;
-        	timeBar.setColors(hudColor);
+        	// timeTxt.color = hudColor;
+        	// timeBar.setColors(hudColor);
         	scoreTxt.color = hudColor;
         	botplayTxt.color = hudColor;
     	}
@@ -1054,10 +1206,13 @@ class PlayState extends MusicBeatState
 			for (i in 0...playerStrums.length) {
 				setOnScripts('defaultPlayerStrumX' + i, playerStrums.members[i].x);
 				setOnScripts('defaultPlayerStrumY' + i, playerStrums.members[i].y);
+				if(ClientPrefs.data.downScroll) playerStrums.members[i].y = 520;
 			}
 			for (i in 0...opponentStrums.length) {
 				setOnScripts('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
 				setOnScripts('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
+				
+				if(ClientPrefs.data.downScroll) opponentStrums.members[i].y = 520;
 				//if(ClientPrefs.data.middleScroll) opponentStrums.members[i].visible = false;
 			}
 
@@ -1329,8 +1484,16 @@ class PlayState extends MusicBeatState
 
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
+		
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		// FlxTween.tween(playVideo, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(playZone, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(autoPlay, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(subTitle, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(setTings, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(fullScreen, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence (with Time Left)
@@ -1752,11 +1915,11 @@ class PlayState extends MusicBeatState
 		if ((controls.PAUSE
 			 #if android
 			 || FlxG.android.justReleased.BACK
-			 || touchPad.buttonP.justPressed
+			 || touchPad.pauseButton.justPressed
 			 #else
-			 || touchPad.buttonP.justPressed
-			 #end)
-			 && (startedCountdown && canPause))
+			 || touchPad.pauseButton.justPressed
+			 #end
+		   	 ) && (startedCountdown && canPause))
 		{
 			var ret:Dynamic = callOnScripts('onPause', null, true);
 			if(ret != LuaUtils.Function_Stop) {
@@ -1810,7 +1973,7 @@ class PlayState extends MusicBeatState
 			if(secondsTotal < 0) secondsTotal = 0;
 
 			if(ClientPrefs.data.timeBarType != 'Song Name')
-				timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+				timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false) + ' / ' + FlxStringUtil.formatTime(FlxG.sound.music.length / 1000, false);
 		}
 
 		if (camZooming)
@@ -1941,28 +2104,28 @@ class PlayState extends MusicBeatState
 	public dynamic function updateIconsPosition()
 	{
 		var iconOffset:Int = 26;
-		iconP1.x = healthBar.barCenter + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
-		iconP2.x = healthBar.barCenter - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		iconP1.x = 1040; // healthBar.barCenter + (150 * iconP1.scale.x - 150) / 2 - iconOffset
+		iconP2.x = 100; // healthBar.barCenter - (150 * iconP2.scale.x) / 2 - iconOffset * 2
 	}
 
 	var iconsAnimations:Bool = true;
 	function set_health(value:Float):Float
 	{
-		if (!iconsAnimations || healthBar == null || !healthBar.enabled || healthBar.valueFunction == null)
+		if(!iconsAnimations || healthBar == null || !healthBar.enabled || healthBar.valueFunction == null)
 		{
 			health = value;
 			return health;
 		}
 
-		// Update health bar
+		// update health bar
 		health = value;
-		var newPercent:Null<Float> = FlxMath.remapToRange(
-			FlxMath.bound(healthBar.valueFunction(), healthBar.bounds.min, healthBar.bounds.max),
-			healthBar.bounds.min, healthBar.bounds.max, 0, 100
-		);
+		var newPercent:Null<Float> = FlxMath.remapToRange(FlxMath.bound(healthBar.valueFunction(), healthBar.bounds.min, healthBar.bounds.max), healthBar.bounds.min, healthBar.bounds.max, 0, 100);
 		healthBar.percent = (newPercent != null ? newPercent : 0);
 
-		inline function isAnimated(icon:HealthIcon):Bool
+		iconP1.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0; //If health is under 20%, change player icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+		iconP2.animation.curAnim.curFrame = (healthBar.percent > 80) ? 1 : 0; //If health is over 80%, change opponent icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+
+		/*inline function isAnimated(icon:HealthIcon):Bool
 			return icon != null && icon.animation != null && (icon.animation.exists("idle") || icon.animation.exists("winning") || icon.animation.exists("losing"));
 
 		if (iconP1 != null)
@@ -2027,7 +2190,7 @@ class PlayState extends MusicBeatState
 					iconP2.animation.curAnim.curFrame = (healthBar.percent > 80) ? 0 : 1;
 				}
 			}
-		}
+		}*/
 
 		return health;
 	}
@@ -2499,6 +2662,13 @@ class PlayState extends MusicBeatState
 
 		timeBar.visible = false;
 		timeTxt.visible = false;
+		//playVideo.visible = false;
+		playZone.visible = false;
+		autoPlay.visible = false;
+		subTitle.visible = false;
+		setTings.visible = false;
+		fullScreen.visible = false;
+		
 		canPause = false;
 		endingSong = true;
 		camZooming = false;
@@ -2610,6 +2780,8 @@ class PlayState extends MusicBeatState
 	public var uiGroup:FlxSpriteGroup;
 	// Stores Note Objects in a Group
 	public var noteGroup:FlxTypedGroup<FlxBasic>;
+	// Stores Other Objects in a Group
+	public var specialGroup:FlxSpriteGroup;
 
 	private function cachePopUpScore()
 	{
@@ -2903,6 +3075,28 @@ class PlayState extends MusicBeatState
 			}
 		}
 		return -1;
+	}
+
+	private function onButtonPress(button:TouchButton):Void
+	{
+		if (button.IDs.filter(id -> id.toString().startsWith("EXTRA")).length > 0)
+			return;
+
+		var buttonCode:Int = (button.IDs[0].toString().startsWith('NOTE')) ? button.IDs[0] : button.IDs[1];
+		callOnScripts('onButtonPressPre', [buttonCode]);
+		if (button.justPressed) keyPressed(buttonCode);
+		callOnScripts('onButtonPress', [buttonCode]);
+	}
+
+	private function onButtonRelease(button:TouchButton):Void
+	{
+		if (button.IDs.filter(id -> id.toString().startsWith("EXTRA")).length > 0)
+			return;
+
+		var buttonCode:Int = (button.IDs[0].toString().startsWith('NOTE')) ? button.IDs[0] : button.IDs[1];
+		callOnScripts('onButtonReleasePre', [buttonCode]);
+		if(buttonCode > -1) keyReleased(buttonCode);
+		callOnScripts('onButtonRelease', [buttonCode]);
 	}
 
 	// Hold notes
@@ -3298,6 +3492,9 @@ class PlayState extends MusicBeatState
 		iconP2.updateHitbox();
 
 		characterBopper(curBeat);
+
+		if(logo != null)
+			logo.animation.play('bump', true);
 
 		super.beatHit();
 		lastBeatHit = curBeat;

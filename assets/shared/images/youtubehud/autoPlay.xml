@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="autoPlay.png">
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="Auto Play Off0000" x="80" y="0" width="78" height="43" frameX="-22" frameY="-27" frameWidth="126" frameHeight="104"/>
+	<SubTexture name="Auto Play On0000" x="0" y="0" width="80" height="43" frameX="-24" frameY="-27" frameWidth="126" frameHeight="104"/>
+</TextureAtlas>
