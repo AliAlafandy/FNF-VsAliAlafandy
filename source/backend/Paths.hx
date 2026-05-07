@@ -550,13 +550,13 @@ class Paths
 		if(spriteJson != null)
 		{
 			changedAtlasJson = true;
-			spriteJson = File.getContent(spriteJson);
+			spriteJson = File.name(spriteJson);
 		}
 
 		if(animationJson != null) 
 		{
 			changedAnimJson = true;
-			animationJson = File.getContent(animationJson);
+			animationJson = File.name(animationJson);
 		}
 
 		// is folder or image path
