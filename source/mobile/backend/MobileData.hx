@@ -111,10 +111,16 @@ class MobileData
 		else
 			data = ClientPrefs.defaultData;
 
-		buttonsInstance.buttonLeft.color = data.arrowRGB[0][0];
-		buttonsInstance.buttonDown.color = data.arrowRGB[1][0];
-		buttonsInstance.buttonUp.color = data.arrowRGB[2][0];
-		buttonsInstance.buttonRight.color = data.arrowRGB[3][0];
+		for (i => button in [
+			buttonsInstance.buttonLeft,
+			buttonsInstance.buttonDown,
+			buttonsInstance.buttonUp,
+			buttonsInstance.buttonRight])
+		{
+			button.color = data.arrowRGB[i][0];
+			button.label.color = data.arrowRGB[i][0];
+			button.label.updateColorTransform();
+		}
 
 		return buttonsInstance;
 	}
