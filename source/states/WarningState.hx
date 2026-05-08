@@ -35,11 +35,14 @@ class WarningState extends MusicBeatState
 		bg.screenCenter();
 		add(bg);
 
-		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x330000FF, 0x0));
-		grid.velocity.set(40, 40);
-		grid.alpha = 0;
-		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-		add(grid);
+		if (ClientPrefs.data.lowQuality == false)
+		{
+			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x330000FF, 0x0));
+			grid.velocity.set(40, 40);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+			add(grid);
+		}
 
 		var ramGB:Float = Math.round(getSystemRAM() * 100) / 100;
 		var ramGuide:Float = 6;
