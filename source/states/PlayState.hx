@@ -766,7 +766,7 @@ class PlayState extends MusicBeatState
 			/*case 'Time Bar Only':
 				reloadTimeBarColor();*/
 			case 'On':
-				reloadHUDColor();
+				reloadHUDColors();
 		}
 
 		#if LUA_ALLOWED
@@ -936,7 +936,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	public function reloadHUDColor() {
+	public function reloadHUDColors() {
 		var dadColor = FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
 
     	if (dadColor == FlxColor.BLACK) {
@@ -2453,10 +2453,10 @@ class PlayState extends MusicBeatState
 							dad.alpha = lastAlpha;
 							iconP2.changeIcon(dad.healthIcon);
 
-							if (ClientPrefs.data.hudColor == 'Time Bar Only')
+							/*if (ClientPrefs.data.hudColor == 'Time Bar Only')
 							{
 								reloadTimeBarColor();
-							} else if (ClientPrefs.data.hudColor == 'On') {
+							} else*/ if (ClientPrefs.data.hudColor == 'On') {
 								reloadHUDColors();
 							}
 						}
