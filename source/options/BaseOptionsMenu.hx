@@ -1,7 +1,4 @@
-package options;
-
-import flixel.addons.display.FlxBackdrop;
-import flixel.addons.display.FlxGridOverlay;
+package options; 
 
 import flixel.input.keyboard.FlxKey;
 import flixel.input.gamepad.FlxGamepad;
@@ -50,14 +47,6 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		add(bg);
 
-		if (ClientPrefs.data.lowQuality == false)
-		{
-			var grid = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x330000FF, 0x0));
-			grid.velocity.set(40, 40);
-			grid.alpha = 0;
-			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-			add(grid);
-		}
 		// avoids lagspikes while scrolling through menus!
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
