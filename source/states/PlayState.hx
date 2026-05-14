@@ -842,13 +842,15 @@ class PlayState extends MusicBeatState
 		#if android
 		if (ClientPrefs.data.pauseButton == true) {
 			addTouchPad("NONE", "PAUSE");
-			touchPad.buttonP.color = 0xFFF1F1F1;
+			// removeTouchPad("NONE", "P");
+			// touchPad.pauseButton.color = 0xFFF1F1F1;
 		} else {
 			addTouchPad("NONE", "NONE");
 		}
 		#else
 		addTouchPad("NONE", "PAUSE");
-		touchPad.buttonP.color = 0xFFF1F1F1;
+		// removeTouchPad("NONE", "P");
+		// touchPad.pauseButton.color = 0xFFF1F1F1;
 		#end
  		addTouchPadCamera();
 		#end
@@ -2122,75 +2124,43 @@ class PlayState extends MusicBeatState
 		var newPercent:Null<Float> = FlxMath.remapToRange(FlxMath.bound(healthBar.valueFunction(), healthBar.bounds.min, healthBar.bounds.max), healthBar.bounds.min, healthBar.bounds.max, 0, 100);
 		healthBar.percent = (newPercent != null ? newPercent : 0);
 
-		iconP1.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0; //If health is under 20%, change player icon to frame 1 (losing icon), otherwise, frame 0 (normal)
-		iconP2.animation.curAnim.curFrame = (healthBar.percent > 80) ? 1 : 0; //If health is over 80%, change opponent icon to frame 1 (losing icon), otherwise, frame 0 (normal)
-
-		/*inline function isAnimated(icon:HealthIcon):Bool
-			return icon != null && icon.animation != null && (icon.animation.exists("idle") || icon.animation.exists("winning") || icon.animation.exists("losing"));
-
-		if (iconP1 != null)
+		switch (iconP1.animation.numFrames)
 		{
-			if (isAnimated(iconP1))
-			{
-				var anim:String = "idle";
-				if (healthBar.percent > 80 && iconP1.animation.exists("winning"))
-					anim = "winning";
-				else if (healthBar.percent < 20 && iconP1.animation.exists("losing"))
-					anim = "losing";
-
-				if (iconP1.animation.curAnim == null || iconP1.animation.curAnim.name != anim)
-					iconP1.animation.play(anim);
-			}
-			else if (iconP1.animation != null && iconP1.animation.curAnim != null)
-			{
-				var frames = iconP1.animation.curAnim.frames;
-				var numFrames = (frames != null) ? frames.length : 2;
-
-				if (numFrames >= 3)
-				{
-					if (healthBar.percent > 80)
-						iconP1.animation.curAnim.curFrame = 2;
-					else if (healthBar.percent < 20)
-						iconP1.animation.curAnim.curFrame = 1;
-					else
-						iconP1.animation.curAnim.curFrame = 0;
-				} else {
-					iconP1.animation.curAnim.curFrame = (healthBar.percent < 20) ? 0 : 1;
-				}
-			}
+			case 3:
+				if (healthBar.percent < 20)
+					iconP1.animation.curAnim.curFrame = 1;
+				else if (healthBar.percent > 80)
+					iconP1.animation.curAnim.curFrame = 2;
+				else
+					iconP1.animation.curAnim.curFrame = 0;
+			case 2:
+				if (healthBar.percent < 20)
+					iconP1.animation.curAnim.curFrame = 1;
+				else
+					iconP1.animation.curAnim.curFrame = 0;
+			case 1:
+				iconP1.animation.curAnim.curFrame = 0;
+		}
+		switch (iconP2.animation.numFrames)
+		{
+			case 3:
+				if (healthBar.percent > 80)
+					iconP2.animation.curAnim.curFrame = 1;
+				else if (healthBar.percent < 20)
+					iconP2.animation.curAnim.curFrame = 2;
+				else 
+					iconP2.animation.curAnim.curFrame = 0;
+			case 2:
+				if (healthBar.percent > 80)
+					iconP2.animation.curAnim.curFrame = 1;
+				else 
+					iconP2.animation.curAnim.curFrame = 0;
+			case 1:
+				iconP2.animation.curAnim.curFrame = 0;
 		}
 
-		if (iconP2 != null)
-		{
-			if (isAnimated(iconP2))
-			{
-				var anim:String = "idle";
-				if (healthBar.percent > 80 && iconP2.animation.exists("losing"))
-					anim = "losing";
-				else if (healthBar.percent < 20 && iconP2.animation.exists("winning"))
-					anim = "winning";
-
-				if (iconP2.animation.curAnim == null || iconP2.animation.curAnim.name != anim)
-					iconP2.animation.play(anim);
-			}
-			else if (iconP2.animation != null && iconP2.animation.curAnim != null)
-			{
-				var frames = iconP2.animation.curAnim.frames;
-				var numFrames = (frames != null) ? frames.length : 2;
-
-				if (numFrames >= 3)
-				{
-					if (healthBar.percent > 80)
-						iconP2.animation.curAnim.curFrame = 1;
-					else if (healthBar.percent < 20)
-						iconP2.animation.curAnim.curFrame = 2;
-					else
-						iconP2.animation.curAnim.curFrame = 0;
-				} else {
-					iconP2.animation.curAnim.curFrame = (healthBar.percent > 80) ? 0 : 1;
-				}
-			}
-		}*/
+		/*iconP1.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0; //If health is under 20%, change player icon to frame 1 (losing icon), otherwise, frame 0 (normal)
+		iconP2.animation.curAnim.curFrame = (healthBar.percent > 80) ? 1 : 0; //If health is over 80%, change opponent icon to frame 1 (losing icon), otherwise, frame 0 (normal)*/
 
 		return health;
 	}
@@ -2482,6 +2452,13 @@ class PlayState extends MusicBeatState
 							}
 							dad.alpha = lastAlpha;
 							iconP2.changeIcon(dad.healthIcon);
+
+							if (ClientPrefs.data.hudColor == 'Time Bar Only')
+							{
+								reloadTimeBarColor();
+							} else if (ClientPrefs.data.hudColor == 'On') {
+								reloadHUDColors();
+							}
 						}
 						setOnScripts('dadName', dad.curCharacter);
 
