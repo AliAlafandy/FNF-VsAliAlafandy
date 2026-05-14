@@ -99,7 +99,7 @@ class MobileOptionsSubState extends BaseOptionsMenu
 
 		#if android
 		option = new Option('Pause Button',
-			'If unchecked, remove pause button from play state.\n(you can use BACK button in both cases)', 'pauseButton',
+			'If unchecked, remove pause button from play zone.\n(you can use BACK button in both cases)', 'pauseButton',
 			'bool');
 		addOption(option);
 		#end
