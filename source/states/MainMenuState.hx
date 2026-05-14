@@ -1,5 +1,8 @@
 package states;
 
+import flixel.addons.display.FlxBackdrop;
+import flixel.addons.display.FlxGridOverlay;
+
 import flixel.FlxObject;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
@@ -77,6 +80,22 @@ class MainMenuState extends MusicBeatState
 		magenta.visible = false;
 		magenta.color = 0xFF00FFFF;
 		add(magenta);
+
+		if (ClientPrefs.data.lowQuality == false)
+		{
+			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+			grid.velocity.set(40, 40);
+			grid.scrollFactor.set(0, 0);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+			add(grid);
+		}
+
+		var blackMenu:FlxSprite = new FlxSprite(-80).makeGraphic(720, 1280, 0xFF000000);
+		blackMenu.scrollFactor.set(0, yScroll);
+		blackMenu.updateHitbox();
+		blackMenu.screenCenter(Y);
+		add(blackMenu);
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
