@@ -701,6 +701,16 @@ class FreeplayState extends MusicBeatState
 			var icon:HealthIcon = iconArray[i];
 			icon.visible = icon.active = true;
 			_lastVisibles.push(i);
+
+			switch (icon.animation.numFrames)
+			{
+				case 3:
+					icon.animation.curAnim.curFrame = 0;
+				case 2:
+					icon.animation.curAnim.curFrame = 0;
+				case 1:
+					icon.animation.curAnim.curFrame = 0;
+			}
 		}
 	}
 
