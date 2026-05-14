@@ -40,11 +40,12 @@ class MasterEditorMenu extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set();
 		bg.color = 0xFF000035;
+		
 		add(bg);
 
 		if (ClientPrefs.data.lowQuality == false)
 		{
-			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x330000FF, 0x0));
+			var grid = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x330000FF, 0x0));
 			grid.velocity.set(40, 40);
 			grid.alpha = 0;
 			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
@@ -142,7 +143,8 @@ class MasterEditorMenu extends MusicBeatState
 				case 'Note Splash Debug':
 					MusicBeatState.switchState(new NoteSplashDebugState());
 				case 'Credit Editor':
-					MusicBeatState.switchState(new CreditEditorState());
+					LoadingState.loadAndSwitchState(new CreditEditorState());
+			}
 			FlxG.sound.music.volume = 0;
 			FreeplayState.destroyFreeplayVocals();
 		}
