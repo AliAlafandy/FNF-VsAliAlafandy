@@ -19,7 +19,8 @@ class MasterEditorMenu extends MusicBeatState
 		'Menu Character Editor',
 		'Dialogue Editor',
 		'Dialogue Portrait Editor',
-		'Note Splash Debug'
+		'Note Splash Debug',
+		'Credit Editor'
 	];
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var directories:Array<String> = [null];
@@ -41,11 +42,14 @@ class MasterEditorMenu extends MusicBeatState
 		bg.color = 0xFF000035;
 		add(bg);
 
-		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x330000FF, 0x0));
-		grid.velocity.set(40, 40);
-		grid.alpha = 0;
-		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-		add(grid);
+		if (ClientPrefs.data.lowQuality == false)
+		{
+			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x330000FF, 0x0));
+			grid.velocity.set(40, 40);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+			add(grid);
+		}
 
 		grpTexts = new FlxTypedGroup<Alphabet>();
 		add(grpTexts);
@@ -137,7 +141,8 @@ class MasterEditorMenu extends MusicBeatState
 					LoadingState.loadAndSwitchState(new DialogueCharacterEditorState(), false);
 				case 'Note Splash Debug':
 					MusicBeatState.switchState(new NoteSplashDebugState());
-			}
+				case 'Credit Editor':
+					MusicBeatState.switchState(new CreditEditorState());
 			FlxG.sound.music.volume = 0;
 			FreeplayState.destroyFreeplayVocals();
 		}
