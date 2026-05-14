@@ -2,6 +2,9 @@ package options;
 
 import lime.ui.Haptic;
 
+import flixel.addons.display.FlxBackdrop;
+import flixel.addons.display.FlxGridOverlay;
+
 class GameplaySettingsSubState extends BaseOptionsMenu
 {
 	public function new()
