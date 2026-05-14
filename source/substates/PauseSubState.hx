@@ -88,11 +88,14 @@ class PauseSubState extends MusicBeatSubstate
 		bg.scrollFactor.set();
 		add(bg);
 
-		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x330000FF, 0x0));
-		grid.velocity.set(40, 40);
-		grid.alpha = 0;
-		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-		add(grid);
+		if (ClientPrefs.data.lowQuality == false)
+		{
+			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x330000FF, 0x0));
+			grid.velocity.set(40, 40);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+			add(grid);
+		}
 
 		var pauseZone:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('youtubehud/pauseVideo'));
 		pauseZone.updateHitbox();
@@ -453,14 +456,14 @@ class PauseSubState extends MusicBeatSubstate
 		}
 
 		for (i in 0...menuItems.length) {
-			var item = new Alphabet(90, 320, menuItems[i], true);
-			item.isMenuItem = true;
+			var item = new Alphabet(0, 320, menuItems[i], true); // 90
+			item.isMenuItemCentered = true; // isMenuItem
 			item.targetY = i;
 			grpMenuShit.add(item);
 
 			if(menuItems[i] == 'Skip Time')
 			{
-				skipTimeText = new FlxText(0, 0, 0, '', 64);
+				skipTimeText = new FlxText(10, 10, 0, '', 64);
 				skipTimeText.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.BLUE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 				skipTimeText.scrollFactor.set();
 				skipTimeText.borderSize = 2;
