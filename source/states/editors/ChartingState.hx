@@ -83,6 +83,7 @@ class ChartingState extends MusicBeatState
 	];
 
 	var _file:FileReference;
+	var postfix:String = '';
 
 	var UI_box:FlxUITabMenu;
 
