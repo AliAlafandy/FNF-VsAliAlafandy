@@ -1,5 +1,7 @@
 package states;
 
+import states.editors.ChartingState;
+
 import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
@@ -139,7 +141,8 @@ class FreeplayState extends MusicBeatState
 		scoreText = new FlxText(0, 5, 0, "", 32); // FlxG.width * 7
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.BLUE, CENTER); // RIGHT
 
-		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0xFF000000);
+		scoreBG = new FlxSprite((FlxG.width * 0.7) - 6, 0).makeGraphic(1, 66, 0xFF000000); // scoreText.x - 6
+		scoreBG.screenCenter(X);
 		// scoreBG.alpha = 0.6;
 		add(scoreBG);
 
@@ -432,7 +435,12 @@ class FreeplayState extends MusicBeatState
 				super.update(elapsed);
 				return;
 			}
-			LoadingState.loadAndSwitchState(new PlayState());
+
+			if((FlxG.keys.pressed.SHIFT || FlxG.keys.justPressed.SHIFT || touchPad.buttonZ.pressed || touchPad.buttonZ.justPressed) && !player.playingMusic) {
+				LoadingState.loadAndSwitchState(new ChartingState());
+			} else {
+				LoadingState.loadAndSwitchState(new PlayState());
+			}
 
 			FlxG.sound.music.volume = 0;
 					
@@ -538,7 +546,12 @@ class FreeplayState extends MusicBeatState
 				super.update(elapsed);
 				return;
 			}
-			LoadingState.loadAndSwitchState(new PlayState());
+
+			if((FlxG.keys.pressed.SHIFT || FlxG.keys.justPressed.SHIFT) && !player.playingMusic) {
+				LoadingState.loadAndSwitchState(new ChartingState());
+			} else {
+				LoadingState.loadAndSwitchState(new PlayState());
+			}
 
 			FlxG.sound.music.volume = 0;
 					
