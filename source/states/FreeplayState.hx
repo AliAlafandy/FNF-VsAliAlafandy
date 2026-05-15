@@ -138,7 +138,7 @@ class FreeplayState extends MusicBeatState
 		}
 		WeekData.setDirectoryFromWeek();
 
-		scoreText = new FlxText(0, 5, 0, "", 32); // FlxG.width * 7
+		scoreText = new FlxText(0, 5, FlxG.width, "", 32); // FlxG.width * 0.7, 0
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.BLUE, CENTER); // RIGHT
 
 		scoreBG = new FlxSprite((FlxG.width * 0.7) - 6, 0).makeGraphic(1, 66, 0xFF000000); // scoreText.x - 6
