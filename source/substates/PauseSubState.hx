@@ -97,11 +97,11 @@ class PauseSubState extends MusicBeatSubstate
 			add(grid);
 		}
 
-		var pauseZone:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('youtubehud/pauseVideo'));
+		var pauseZone:FlxSprite = new FlxSprite(20, 0).loadGraphic(Paths.image('youtubehud/pauseVideo'));
 		pauseZone.updateHitbox();
 		pauseZone.alpha = 0.6;
 		pauseZone.screenCenter(Y); // XY
-		pauseZone.x = FlxG.width - (pauseZone.width + 40);
+		pauseZone.x = FlxG.width - (pauseZone.width + 20);
 		add(pauseZone);
 
 		var levelInfo:FlxText = new FlxText(20, 15, 0, PlayState.SONG.song, 32);
