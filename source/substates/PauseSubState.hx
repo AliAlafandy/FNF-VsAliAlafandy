@@ -101,7 +101,7 @@ class PauseSubState extends MusicBeatSubstate
 		pauseZone.updateHitbox();
 		pauseZone.alpha = 0.6;
 		pauseZone.screenCenter(Y); // XY
-		pauseZone.x = FlxG.width - (pauseZone.width + 20);
+		pauseZone.x = FlxG.width - (pauseZone.width + 40);
 		add(pauseZone);
 
 		var levelInfo:FlxText = new FlxText(20, 15, 0, PlayState.SONG.song, 32);
