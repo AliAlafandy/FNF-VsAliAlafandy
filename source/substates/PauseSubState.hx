@@ -97,10 +97,11 @@ class PauseSubState extends MusicBeatSubstate
 			add(grid);
 		}
 
-		var pauseZone:FlxSprite = new FlxSprite(200, 0).loadGraphic(Paths.image('youtubehud/pauseVideo'));
+		var pauseZone:FlxSprite = new FlxSprite(20, 0).loadGraphic(Paths.image('youtubehud/pauseVideo'));
 		pauseZone.updateHitbox();
 		pauseZone.alpha = 0.6;
 		pauseZone.screenCenter(Y); // XY
+		pauseZone.x = FlxG.width - (pauseZone.width + 20);
 		add(pauseZone);
 
 		var levelInfo:FlxText = new FlxText(20, 15, 0, PlayState.SONG.song, 32);
@@ -459,6 +460,7 @@ class PauseSubState extends MusicBeatSubstate
 			var item = new Alphabet(90, 320, menuItems[i], true);
 			item.isMenuItemCentered = true; // isMenuItem
 			item.targetY = i;
+			item.changeX = false;
 			grpMenuShit.add(item);
 
 			if(menuItems[i] == 'Skip Time')
