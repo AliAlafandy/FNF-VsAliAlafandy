@@ -686,7 +686,7 @@ class CreditEditorState extends MusicBeatState
 					item.screenCenter(X);
 					item.x = FlxMath.lerp(item.x - 70, lastX, lerpVal);
 				} else {
-					item.x = FlxMath.lerp(400 + -40 * Math.abs(item.targetY), item.x, lerpVal);
+					item.x = FlxMath.lerp(300 + -40 * Math.abs(item.targetY), item.x, lerpVal);
 				}
 			}
 		}
