@@ -1,7 +1,5 @@
 package states;
 
-import states.editors.ChartingState;
-
 import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
@@ -138,7 +136,7 @@ class FreeplayState extends MusicBeatState
 		}
 		WeekData.setDirectoryFromWeek();
 
-		scoreText = new FlxText(0, 5, FlxG.width / 2, "", 32); // FlxG.width * 0.7, 0
+		scoreText = new FlxText(0, 5, FlxG.width, "", 32); // FlxG.width * 0.7, 0
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.BLUE, CENTER); // RIGHT
 
 		scoreBG = new FlxSprite((FlxG.width * 0.7) - 6, 0).makeGraphic(1, 66, 0xFF000000); // scoreText.x - 6
@@ -435,12 +433,7 @@ class FreeplayState extends MusicBeatState
 				super.update(elapsed);
 				return;
 			}
-
-			if((FlxG.keys.pressed.SHIFT || FlxG.keys.justPressed.SHIFT || touchPad.buttonZ.pressed || touchPad.buttonZ.justPressed) && !player.playingMusic) {
-				LoadingState.loadAndSwitchState(new ChartingState());
-			} else {
-				LoadingState.loadAndSwitchState(new PlayState());
-			}
+			LoadingState.loadAndSwitchState(new PlayState());
 
 			FlxG.sound.music.volume = 0;
 					
@@ -546,12 +539,7 @@ class FreeplayState extends MusicBeatState
 				super.update(elapsed);
 				return;
 			}
-
-			if((FlxG.keys.pressed.SHIFT || FlxG.keys.justPressed.SHIFT) && !player.playingMusic) {
-				LoadingState.loadAndSwitchState(new ChartingState());
-			} else {
-				LoadingState.loadAndSwitchState(new PlayState());
-			}
+			LoadingState.loadAndSwitchState(new PlayState());
 
 			FlxG.sound.music.volume = 0;
 					
