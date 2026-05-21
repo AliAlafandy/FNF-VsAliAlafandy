@@ -104,6 +104,9 @@ class ClientPrefs {
 	public static var data:SaveVariables = {};
 	public static var defaultData:SaveVariables = {};
 
+	//You will pay this!
+	public static var unlockedWeeks:Array<String> = [];
+
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
 		//Key Bind, Name for ControlsSubState
@@ -204,6 +207,9 @@ class ClientPrefs {
 		#if ACHIEVEMENTS_ALLOWED Achievements.save(); #end
 		FlxG.save.flush();
 
+		//Save it
+		FlxG.save.data.unlockedWeeks = unlockedWeeks;
+
 		//Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v3', CoolUtil.getSavePath());
@@ -216,6 +222,10 @@ class ClientPrefs {
 
 	public static function loadPrefs() {
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
+
+		//And load it
+		if(FlxG.save.data.unlockedWeeks != null)
+			unlockedWeeks = FlxG.save.data.unlockedWeeks;
 
 		for (key in Reflect.fields(data))
 			if (key != 'gameplaySettings' && Reflect.hasField(FlxG.save.data, key))
@@ -306,5 +316,14 @@ class ClientPrefs {
 		FlxG.sound.muteKeys = (!Controls.instance.mobileC && turnOn) ? TitleState.muteKeys : emptyArray;
 		FlxG.sound.volumeDownKeys = (!Controls.instance.mobileC && turnOn) ? TitleState.volumeDownKeys : emptyArray;
 		FlxG.sound.volumeUpKeys = (!Controls.instance.mobileC && turnOn) ? TitleState.volumeUpKeys : emptyArray;
+	}
+
+	//Again, you will pay this!
+	public static function isWeekUnlocked(weekFile:String, defaultUnlocked:Bool):Bool
+	{
+		if(defaultUnlocked)
+			return true;
+
+		return unlockedWeeks.contains(weekFile);
 	}
 }
