@@ -19,6 +19,9 @@ typedef WeekFile =
 	var hideStoryMode:Bool;
 	var hideFreeplay:Bool;
 	var difficulties:String;
+
+	// Flash system
+	var flashCost:Int;
 }
 
 class WeekData {
@@ -40,6 +43,9 @@ class WeekData {
 	public var hideFreeplay:Bool;
 	public var difficulties:String;
 
+	// Flash system
+	public var flashCost:Int = 0;
+
 	public var fileName:String;
 
 	public static function createWeekFile():WeekFile {
@@ -55,7 +61,8 @@ class WeekData {
 			hiddenUntilUnlocked: false,
 			hideStoryMode: false,
 			hideFreeplay: false,
-			difficulties: ''
+			difficulties: '',
+			flashCost: 0
 		};
 		return weekFile;
 	}
