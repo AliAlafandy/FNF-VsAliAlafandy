@@ -234,6 +234,11 @@ class PlayState extends MusicBeatState
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
+	// Flash HUD
+	var flash:FlxSprite;
+	var flashTxt:FlxText;
+	var waitingForFlashes:Bool = false;
+
 	public static var campaignScore:Int = 0;
 	public static var campaignMisses:Int = 0;
 	public static var seenCutscene:Bool = false;
@@ -754,6 +759,17 @@ class PlayState extends MusicBeatState
 			iconP2.y = 500 - 450;
 			healthBar.y = 560 - 450;
 		}
+
+		// Flash Zone
+		flash = new FlxSprite(15, 15).loadGraphic(Paths.image('flash'));
+		flash.scrollFactor.set(0, 0);
+		flash.scale.set(0.3, 0.3);
+		specialGroup.add(flash);
+
+		flashTxt = new FlxText(60, 20, 0, '' + ClientPrefs.flashes, 24);
+		flashTxt.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT);
+		flashTxt.scrollFactor.set(0, 0);
+		specialGroup.add(flashTxt);
 
 		uiGroup.cameras = [camHUD];
 		noteGroup.cameras = [camHUD];
@@ -2605,6 +2621,125 @@ class PlayState extends MusicBeatState
 				endCallback();
 			});
 		}
+
+		if(waitingForFlashes)
+			return;
+
+		var ret:Dynamic = callOnScripts('onEndSong', null, true);
+		if(ret != LuaUtils.Function_Stop && !transitioning)
+		{
+			#if !switch
+			var percent:Float = ratingPercent;
+			if(Math.isNaN(percent)) percent = 0;
+			Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
+			#end
+			playbackRate = 1;
+
+			if (chartingMode)
+			{
+				openChartEditor();
+				return false;
+			}
+
+			if (isStoryMode)
+			{
+				campaignScore += songScore;
+				campaignMisses += songMisses;
+
+				storyPlaylist.remove(storyPlaylist[0]);
+
+				if (storyPlaylist.length <= 0)
+				{
+					Mods.loadTopMod();
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
+
+					MusicBeatState.switchState(new StoryMenuState());
+
+					// if ()
+					if(!ClientPrefs.getGameplaySetting('practice') && !ClientPrefs.getGameplaySetting('botplay')) {
+						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
+						Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
+
+						var weekFlashes:Int = Math.floor(campaign / 600); // 1000
+
+						if(weekFlashes < 1)
+							weekFlashes = 1;
+
+						ClientPrefs.flashes += weekFlashes;
+
+						addFlashAnimated(weekFlashes);
+
+						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
+						FlxG.save.flush();
+					}
+					changedDifficulty = false;
+				}
+				else
+				{
+					var difficulty:String = Difficulty.getFilePath();
+
+					trace('LOADING NEXT SONG');
+					trace(Paths.formatToSongPath(PlayState.storyPlaylist[0]) + difficulty);
+
+					FlxTransitionableState.skipNextTransIn = true;
+					FlxTransitionableState.skipNextTransOut = true;
+					prevCamFollow = camFollow;
+
+					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + difficulty, PlayState.storyPlaylist[0]);
+					FlxG.sound.music.stop();
+
+					LoadingState.loadAndSwitchState(new PlayState());
+				}
+			}
+			else
+			{
+				trace('WENT BACK TO FREEPLAY??');
+				Mods.loadTopMod();
+				#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
+
+				var earnedFlashes:Int = Math.floor(songScore / 600); // 1000
+
+				if(earnedFlashes < 1)
+					earnedFlashes = 1;
+
+				ClientPrefs.flashes += earnedFlashes;
+
+				addFlashAnimated(earnedFlashes);
+
+				MusicBeatState.switchState(new FreeplayState());
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				changedDifficulty = false;
+			}
+			transitioning = true;
+		}
+		// return true;
+	}
+
+	function addFlashAnimated(amount:Int)
+	{
+		waitingForFlashes = true;
+
+		var oldFlashes:Int = ClientPrefs.flashes;
+		var targetFlashes:Int = oldFlashes + amount;
+
+		var current:Int = oldFlashes;
+
+		FlxTween.num(oldFlashes, targetFlashes, 1.5, {
+			onUpdate: function(v:Float)
+			{
+				current = Std.int(v);
+				flashTxt.text = '' + current;
+			},
+
+			onComplete: function(twn:FlxTween)
+			{
+				ClientPrefs.flashes = targetFlashes;
+				ClientPrefs.saveSettings();
+				waitingForFlashes = false;
+				finishSong();
+			}
+		});
 	}
 
 
@@ -2655,6 +2790,9 @@ class PlayState extends MusicBeatState
 		deathCounter = 0;
 		seenCutscene = false;
 
+		if(waitingForFlashes)
+			return;
+
 		#if ACHIEVEMENTS_ALLOWED
 		var weekNoMiss:String = WeekData.getWeekFileName() + '_nomiss';
 		checkForAchievement([weekNoMiss, 'ur_bad', 'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
@@ -2696,6 +2834,15 @@ class PlayState extends MusicBeatState
 						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
 						Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
 
+						var weekFlashes:Int = Math.floor(campaign / 600); // 1000
+
+						if(weekFlashes < 1)
+							weekFlashes = 1;
+
+						ClientPrefs.flashes += weekFlashes;
+
+						addFlashAnimated(weekFlashes);
+
 						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
 						FlxG.save.flush();
 					}
@@ -2723,6 +2870,15 @@ class PlayState extends MusicBeatState
 				trace('WENT BACK TO FREEPLAY??');
 				Mods.loadTopMod();
 				#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
+
+				var earnedFlashes:Int = Math.floor(songScore / 600); // 1000
+
+				if(earnedFlashes < 1)
+					earnedFlashes = 1;
+
+				ClientPrefs.flashes += earnedFlashes;
+
+				addFlashAnimated(earnedFlashes);
 
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
