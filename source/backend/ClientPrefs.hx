@@ -106,6 +106,7 @@ class ClientPrefs {
 
 	//You will pay this!
 	public static var unlockedWeeks:Array<String> = [];
+	public static var flashes:Int = 0;
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -209,6 +210,7 @@ class ClientPrefs {
 
 		//Save it
 		FlxG.save.data.unlockedWeeks = unlockedWeeks;
+		FlxG.save.data.flashes = flashes;
 
 		//Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		var save:FlxSave = new FlxSave();
@@ -226,6 +228,9 @@ class ClientPrefs {
 		//And load it
 		if(FlxG.save.data.unlockedWeeks != null)
 			unlockedWeeks = FlxG.save.data.unlockedWeeks;
+
+		if(FlxG.save.data.flashes != null)
+    		flashes = FlxG.save.data.flashes;
 
 		for (key in Reflect.fields(data))
 			if (key != 'gameplaySettings' && Reflect.hasField(FlxG.save.data, key))
