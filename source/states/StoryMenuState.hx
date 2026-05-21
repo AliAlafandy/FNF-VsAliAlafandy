@@ -304,6 +304,30 @@ class StoryMenuState extends MusicBeatState
 	{
 		if (!weekIsLocked(loadedWeeks[curWeek].fileName))
 		{
+			if(!ClientPrefs.isWeekUnlocked(weekFileName, loadedWeek.startUnlocked))
+			{
+				var price:Int = 0;
+
+				if(loadedWeek.flashCost != null)
+					price = loadedWeek.flashCost;
+
+				if(ClientPrefs.flashes >= price)
+				{
+					ClientPrefs.flashes -= price;
+					ClientPrefs.unlockedWeeks.push(weekFileName);
+					ClientPrefs.saveSettings();
+
+					FlxG.sound.play(Paths.sound('flash/buyflash'));
+
+					// refresh menu
+					changeWeek();
+				} else {
+					FlxG.sound.play(Paths.sound('flash/deniedflash'));
+				}
+
+				return;
+			}
+
 			// We can't use Dynamic Array .copy() because that crashes HTML5, here's a workaround.
 			var songArray:Array<String> = [];
 			var leWeek:Array<Dynamic> = loadedWeeks[curWeek].songs;
