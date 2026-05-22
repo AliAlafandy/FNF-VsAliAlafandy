@@ -764,11 +764,13 @@ class PlayState extends MusicBeatState
 		flash = new FlxSprite(15, 15).loadGraphic(Paths.image('flash'));
 		flash.scrollFactor.set(0, 0);
 		flash.scale.set(0.3, 0.3);
+		// flash.alpha = 0;
 		specialGroup.add(flash);
 
-		flashTxt = new FlxText(60, 20, 0, '' + ClientPrefs.flashes, 24);
+		flashTxt = new FlxText(flash.x + 20, flash.y + 5, 0, '' + ClientPrefs.flashes, 24);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT);
 		flashTxt.scrollFactor.set(0, 0);
+		// flashTxt.alpha = 0;
 		specialGroup.add(flashTxt);
 
 		uiGroup.cameras = [camHUD];
@@ -2671,6 +2673,7 @@ class PlayState extends MusicBeatState
 						addFlashAnimated(weekFlashes);
 
 						FlxTween.tween(flash, {alpha: 1}, 0.4);
+						FlxTween.tween(flashTxt, {alpha: 1}, 0.4);
 
 						FlxG.sound.play(Paths.sound('flash/getbean'));
 
@@ -2719,6 +2722,7 @@ class PlayState extends MusicBeatState
 				addFlashAnimated(earnedFlashes);
 
 				FlxTween.tween(flash, {alpha: 1}, 0.4);
+				FlxTween.tween(flashTxt, {alpha: 1}, 0.4);
 
 				FlxG.sound.play(Paths.sound('flash/getbean'));
 
@@ -2866,6 +2870,7 @@ class PlayState extends MusicBeatState
 						addFlashAnimated(weekFlashes);
 
 						FlxTween.tween(flash, {alpha: 1}, 0.4);
+						FlxTween.tween(flashTxt, {alpha: 1}, 0.4);
 
 						FlxG.sound.play(Paths.sound('flash/getbean'));
 
@@ -2914,6 +2919,7 @@ class PlayState extends MusicBeatState
 				addFlashAnimated(earnedFlashes);
 
 				FlxTween.tween(flash, {alpha: 1}, 0.4);
+				FlxTween.tween(flashTxt, {alpha: 1}, 0.4);
 
 				FlxG.sound.play(Paths.sound('flash/getbean'));
 
