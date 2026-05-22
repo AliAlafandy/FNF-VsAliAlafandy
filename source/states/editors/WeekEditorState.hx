@@ -228,7 +228,7 @@ class WeekEditorState extends MusicBeatState
 	var hiddenUntilUnlockCheckbox:FlxUICheckBox;
 
 	// Flash editor
-	var beansCostStepper:FlxUINumericStepper;
+	var flashCostNumericStepper:FlxUINumericStepper;
 
 	function addOtherUI() {
 		var tab_group = new FlxUI(null, UI_box);
