@@ -2624,7 +2624,7 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		if(waitingForFlashes)
+		/*if(waitingForFlashes)
 			return;
 
 		var ret:Dynamic = callOnScripts('onEndSong', null, true);
@@ -2663,7 +2663,7 @@ class PlayState extends MusicBeatState
 						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
 						Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
 
-						var weekFlashes:Int = Math.floor(campaign / 600); // 1000
+						var weekFlashes:Int = Math.floor(campaignScore / 600); // 1000
 
 						if(weekFlashes < 1)
 							weekFlashes = 1;
@@ -2739,7 +2739,7 @@ class PlayState extends MusicBeatState
 			}
 			transitioning = true;
 		}
-		// return true;
+		// return true;*/
 	}
 
 	function addFlashAnimated(amount:Int)
@@ -2860,7 +2860,7 @@ class PlayState extends MusicBeatState
 						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
 						Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
 
-						var weekFlashes:Int = Math.floor(campaign / 600); // 1000
+						var weekFlashes:Int = Math.floor(campaignScore / 600); // 1000
 
 						if(weekFlashes < 1)
 							weekFlashes = 1;
