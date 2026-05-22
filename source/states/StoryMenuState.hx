@@ -39,6 +39,10 @@ class StoryMenuState extends MusicBeatState
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 
+	// Flash HUD
+	var flash:FlxSprite;
+	var flashTxt:FlxText;
+
 	var loadedWeeks:Array<WeekData> = [];
 
 	override function create()
@@ -172,6 +176,18 @@ class StoryMenuState extends MusicBeatState
 		add(scoreText);
 		add(txtWeekTitle);
 
+		// Flash Zone
+		flash = new FlxSprite(FlxG.width - 35, FlxG.height - 35).loadGraphic(Paths.image('flash'));
+		flash.scrollFactor.set(0, 0);
+		flash.scale.set(0.3, 0.3);
+
+		flashTxt = new FlxText(flash.x + 20, flash.y + 5, 0, '' + ClientPrefs.flashes, 24);
+		flashTxt.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT);
+		flashTxt.scrollFactor.set(0, 0);
+
+		add(flash);
+		add(flashTxt);
+
 		changeWeek();
 		changeDifficulty();
 
@@ -300,6 +316,22 @@ class StoryMenuState extends MusicBeatState
 	var selectedWeek:Bool = false;
 	var stopspamming:Bool = false;
 
+	function showUnlockPopup(text:String)
+	{
+    	var popup:FlxText = new FlxText(0, 0, 0, text, 32);
+    	popup.screenCenter();
+    	popup.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+    	add(popup);
+
+    	FlxTween.tween(popup, {alpha: 0, y: popup.y - 40}, 2,
+    	{
+        	onComplete: function(twn)
+        	{
+            	popup.destroy();
+        	}
+    	});
+	}
+
 	function selectWeek()
 	{
 		if (!weekIsLocked(loadedWeeks[curWeek].fileName))
@@ -318,11 +350,16 @@ class StoryMenuState extends MusicBeatState
 					ClientPrefs.saveSettings();
 
 					FlxG.sound.play(Paths.sound('flash/buyflash'));
+					showUnlockPopup('Unlocked ' + weekName + '!');
+
+					FlxG.save.data.flashes = ClientPrefs.flashes;
+					FlxG.save.flush();
 
 					// refresh menu
 					changeWeek();
 				} else {
 					FlxG.sound.play(Paths.sound('flash/deniedflash'));
+					showUnlockPopup('Need ' + price + ' Flashes!');
 				}
 
 				return;
