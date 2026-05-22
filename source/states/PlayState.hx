@@ -2670,6 +2670,17 @@ class PlayState extends MusicBeatState
 
 						addFlashAnimated(weekFlashes);
 
+						FlxTween.tween(flash, {alpha: 1}, 0.4);
+
+						FlxG.sound.play(Paths.sound('flash/getbean'));
+
+						FlxTween.cancelTweensOf(flash.scale);
+
+        				flash.scale.set(0.6, 0.6);
+        				FlxTween.tween(flash.scale, {x: 1, y: 1}, 0.25, {ease: FlxEase.quadOut});
+
+						FlxG.save.data.flashes = ClientPrefs.flashes;
+
 						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
 						FlxG.save.flush();
 					}
@@ -2706,6 +2717,17 @@ class PlayState extends MusicBeatState
 				ClientPrefs.flashes += earnedFlashes;
 
 				addFlashAnimated(earnedFlashes);
+
+				FlxTween.tween(flash, {alpha: 1}, 0.4);
+
+				FlxG.sound.play(Paths.sound('flash/getbean'));
+
+				FlxTween.cancelTweensOf(flash.scale);
+
+        		flash.scale.set(0.6, 0.6);
+        		FlxTween.tween(flash.scale, {x: 1, y: 1}, 0.25, {ease: FlxEase.quadOut});
+
+				FlxG.save.data.flashes = ClientPrefs.flashes;
 
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -2843,6 +2865,17 @@ class PlayState extends MusicBeatState
 
 						addFlashAnimated(weekFlashes);
 
+						FlxTween.tween(flash, {alpha: 1}, 0.4);
+
+						FlxG.sound.play(Paths.sound('flash/getbean'));
+
+						FlxTween.cancelTweensOf(flash.scale);
+
+        				flash.scale.set(0.6, 0.6);
+        				FlxTween.tween(flash.scale, {x: 1, y: 1}, 0.25, {ease: FlxEase.quadOut});
+
+						FlxG.save.data.flashes = ClientPrefs.flashes;
+
 						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
 						FlxG.save.flush();
 					}
@@ -2879,6 +2912,17 @@ class PlayState extends MusicBeatState
 				ClientPrefs.flashes += earnedFlashes;
 
 				addFlashAnimated(earnedFlashes);
+
+				FlxTween.tween(flash, {alpha: 1}, 0.4);
+
+				FlxG.sound.play(Paths.sound('flash/getbean'));
+
+				FlxTween.cancelTweensOf(flash.scale);
+
+        		flash.scale.set(0.6, 0.6);
+        		FlxTween.tween(flash.scale, {x: 1, y: 1}, 0.25, {ease: FlxEase.quadOut});
+
+				FlxG.save.data.flashes = ClientPrefs.flashes;
 
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
