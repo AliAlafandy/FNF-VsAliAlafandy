@@ -2678,7 +2678,7 @@ class PlayState extends MusicBeatState
 						} else if (storyDifficulty == 'Hard') { 
 							ClientPrefs.flashes += 100;
 						} else if (storyDifficulty != 'Easy' || storyDifficulty != 'Normal' || storyDifficulty != 'Hard') {
-    						ClientPrefs.flashes += FlxG.random; // 0
+    						ClientPrefs.flashes += FlxG.random.int(0, 500);
 						}
 
 						addFlashAnimated(weekFlashes);
@@ -2723,7 +2723,7 @@ class PlayState extends MusicBeatState
 				Mods.loadTopMod();
 				#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 
-				var earnedFlashes:Int = Math.floor(songScore / 600); // 1000
+				var earnedFlashes:Int = Math.floor(songScore / 500); // 600 -- 1000
 
 				if(earnedFlashes < 1)
 					earnedFlashes = 1;
@@ -2738,7 +2738,7 @@ class PlayState extends MusicBeatState
 				} else if (storyDifficulty == 'Hard') { 
 					ClientPrefs.flashes += 100;
 				} else if (storyDifficulty != 'Easy' || storyDifficulty != 'Normal' || storyDifficulty != 'Hard') {
-    				ClientPrefs.flashes += FlxG.random; // 0
+    				ClientPrefs.flashes += FlxG.random.int(0, 500);
 				}
 
 				addFlashAnimated(earnedFlashes);
@@ -2759,7 +2759,7 @@ class PlayState extends MusicBeatState
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
 			}
-			transitioning = true;
+	return transitioning = true;
 		}
 		// return true;*/
 	}
@@ -2773,7 +2773,8 @@ class PlayState extends MusicBeatState
 
 		var current:Int = oldFlashes;
 
-		FlxTween.num(oldFlashes, targetFlashes, 1.5, {
+		FlxTween.num(oldFlashes, targetFlashes, 1.5,
+		{
 			onUpdate: function(v:Float)
 			{
 				current = Std.int(v);
@@ -2789,7 +2790,6 @@ class PlayState extends MusicBeatState
 			}
 		});
 	}
-
 
 	public var transitioning = false;
 	public function endSong()
@@ -2838,8 +2838,7 @@ class PlayState extends MusicBeatState
 		deathCounter = 0;
 		seenCutscene = false;
 
-		if(waitingForFlashes)
-			return;
+		if(waitingForFlashes) return;
 
 		#if ACHIEVEMENTS_ALLOWED
 		var weekNoMiss:String = WeekData.getWeekFileName() + '_nomiss';
@@ -2889,7 +2888,7 @@ class PlayState extends MusicBeatState
 
 						ClientPrefs.flashes += weekFlashes;
 
-						if (storyDifficulty == 'Easy')
+						/*if (storyDifficulty == 'Easy')
 						{
 							ClientPrefs.flashes += 25;
 						} else if (storyDifficulty == 'Normal') {
@@ -2897,8 +2896,8 @@ class PlayState extends MusicBeatState
 						} else if (storyDifficulty == 'Hard') { 
 							ClientPrefs.flashes += 100;
 						} else if (storyDifficulty != 'Easy' || storyDifficulty != 'Normal' || storyDifficulty != 'Hard') {
-    						ClientPrefs.flashes += FlxG.random; // 0
-						}
+    						ClientPrefs.flashes += FlxG.random.int(0, 500);
+						}*/
 
 						addFlashAnimated(weekFlashes);
 
@@ -2942,14 +2941,14 @@ class PlayState extends MusicBeatState
 				Mods.loadTopMod();
 				#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 
-				var earnedFlashes:Int = Math.floor(songScore / 600); // 1000
+				var earnedFlashes:Int = Math.floor(songScore / 500); // 600 -- 1000
 
 				if(earnedFlashes < 1)
 					earnedFlashes = 1;
 
 				ClientPrefs.flashes += earnedFlashes;
 
-				if (storyDifficulty == 'Easy')
+				/*if (storyDifficulty == 'Easy')
 				{
 					ClientPrefs.flashes += 25;
 				} else if (storyDifficulty == 'Normal') {
@@ -2957,8 +2956,8 @@ class PlayState extends MusicBeatState
 				} else if (storyDifficulty == 'Hard') { 
 					ClientPrefs.flashes += 100;
 				} else if (storyDifficulty != 'Easy' || storyDifficulty != 'Normal' || storyDifficulty != 'Hard') {
-    				ClientPrefs.flashes += FlxG.random; // 0
-				}
+    				ClientPrefs.flashes += FlxG.random.int(0, 500);
+				}*/
 
 				addFlashAnimated(earnedFlashes);
 
