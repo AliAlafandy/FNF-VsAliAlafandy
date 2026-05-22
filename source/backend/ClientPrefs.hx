@@ -104,12 +104,15 @@ class ClientPrefs {
 	public static var data:SaveVariables = {};
 	public static var defaultData:SaveVariables = {};
 
+	// Flash system
+	public static var flashes:Int = 0;
+
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
 		//Key Bind, Name for ControlsSubState
-		'note_up'		=> [D, UP],
-		'note_left'		=> [F, LEFT],
-		'note_down'		=> [J, DOWN],
+		'note_up'		=> [J, UP],
+		'note_left'		=> [D, LEFT],
+		'note_down'		=> [F, DOWN],
 		'note_right'	=> [K, RIGHT],
 		
 		'ui_up'			=> [W, UP],
@@ -204,6 +207,9 @@ class ClientPrefs {
 		#if ACHIEVEMENTS_ALLOWED Achievements.save(); #end
 		FlxG.save.flush();
 
+		// Flash section
+		FlxG.save.data.flashes = flashes;
+
 		//Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v3', CoolUtil.getSavePath());
@@ -260,6 +266,10 @@ class ClientPrefs {
 		#if DISCORD_ALLOWED
 		DiscordClient.check();
 		#end
+
+		// Flash section
+		if(FlxG.save.data.flashes != null)
+			flashes = FlxG.save.data.flashes;
 
 		// controls on a separate save file
 		var save:FlxSave = new FlxSave();
