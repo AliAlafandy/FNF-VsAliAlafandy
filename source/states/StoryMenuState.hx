@@ -336,7 +336,7 @@ class StoryMenuState extends MusicBeatState
 	{
 		if (!weekIsLocked(loadedWeeks[curWeek].fileName))
 		{
-			if(!ClientPrefs.isWeekUnlocked(weekFileName, loadedWeek.startUnlocked))
+			if(!ClientPrefs.isWeekUnlocked(weekFile, loadedWeek.startUnlocked))
 			{
 				var price:Int = 0;
 
@@ -346,7 +346,7 @@ class StoryMenuState extends MusicBeatState
 				if(ClientPrefs.flashes >= price)
 				{
 					ClientPrefs.flashes -= price;
-					ClientPrefs.unlockedWeeks.push(weekFileName);
+					ClientPrefs.unlockedWeeks.push(weekFile);
 					ClientPrefs.saveSettings();
 
 					FlxG.sound.play(Paths.sound('flash/buyflash'));
