@@ -2670,6 +2670,17 @@ class PlayState extends MusicBeatState
 
 						ClientPrefs.flashes += weekFlashes;
 
+						if (storyDifficulty == 'Easy')
+						{
+							ClientPrefs.flashes += 25;
+						} else if (storyDifficulty == 'Normal') {
+							ClientPrefs.flashes += 50;
+						} else if (storyDifficulty == 'Hard') { 
+							ClientPrefs.flashes += 100;
+						} else if (storyDifficulty != 'Easy' || storyDifficulty != 'Normal' || storyDifficulty != 'Hard') {
+    						ClientPrefs.flashes += FlxG.random; // 0
+						}
+
 						addFlashAnimated(weekFlashes);
 
 						FlxTween.tween(flash, {alpha: 1}, 0.4);
@@ -2718,6 +2729,17 @@ class PlayState extends MusicBeatState
 					earnedFlashes = 1;
 
 				ClientPrefs.flashes += earnedFlashes;
+
+				if (storyDifficulty == 'Easy')
+				{
+					ClientPrefs.flashes += 25;
+				} else if (storyDifficulty == 'Normal') {
+					ClientPrefs.flashes += 50;
+				} else if (storyDifficulty == 'Hard') { 
+					ClientPrefs.flashes += 100;
+				} else if (storyDifficulty != 'Easy' || storyDifficulty != 'Normal' || storyDifficulty != 'Hard') {
+    				ClientPrefs.flashes += FlxG.random; // 0
+				}
 
 				addFlashAnimated(earnedFlashes);
 
@@ -2867,6 +2889,17 @@ class PlayState extends MusicBeatState
 
 						ClientPrefs.flashes += weekFlashes;
 
+						if (storyDifficulty == 'Easy')
+						{
+							ClientPrefs.flashes += 25;
+						} else if (storyDifficulty == 'Normal') {
+							ClientPrefs.flashes += 50;
+						} else if (storyDifficulty == 'Hard') { 
+							ClientPrefs.flashes += 100;
+						} else if (storyDifficulty != 'Easy' || storyDifficulty != 'Normal' || storyDifficulty != 'Hard') {
+    						ClientPrefs.flashes += FlxG.random; // 0
+						}
+
 						addFlashAnimated(weekFlashes);
 
 						FlxTween.tween(flash, {alpha: 1}, 0.4);
@@ -2915,6 +2948,17 @@ class PlayState extends MusicBeatState
 					earnedFlashes = 1;
 
 				ClientPrefs.flashes += earnedFlashes;
+
+				if (storyDifficulty == 'Easy')
+				{
+					ClientPrefs.flashes += 25;
+				} else if (storyDifficulty == 'Normal') {
+					ClientPrefs.flashes += 50;
+				} else if (storyDifficulty == 'Hard') { 
+					ClientPrefs.flashes += 100;
+				} else if (storyDifficulty != 'Easy' || storyDifficulty != 'Normal' || storyDifficulty != 'Hard') {
+    				ClientPrefs.flashes += FlxG.random; // 0
+				}
 
 				addFlashAnimated(earnedFlashes);
 
