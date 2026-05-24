@@ -42,13 +42,14 @@ class FlashPopup extends FlxSpriteGroup
 		add(popupBG);
 
 		flash = new FlxSprite(0, 0).loadGraphic(Paths.image('flash'));
-		flash.setPosition(popupBG.getGraphicMidpoint().x - 90, popupBG.getGraphicMidpoint().y - (flash.height / 2));
+		flash.setPosition(popupBG.getGraphicMidpoint().x, popupBG.getGraphicMidpoint().y - (flash.height / 2)); // popupBG.getGraphicMidpoint().x - 90
 		flash.antialiasing = true;
-		flash.updateHitbox(); 
+		flash.updateHitbox();
 		flash.scrollFactor.set();
-		add(flash);	
+		flash.scale.set(0.3, 0.3);
+		add(flash);
 
-		flashTxt = new FlxText(popupBG.x + 90, popupBG.y + 35, 200, Std.string(amount), 35);
+		flashTxt = new FlxText(flash.x + 90, flash.y + 35, 200, Std.string(amount), 35);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		flashTxt.setPosition(popupBG.getGraphicMidpoint().x - 10, popupBG.getGraphicMidpoint().y - (flashTxt.height / 2));
 		flashTxt.updateHitbox();
@@ -93,8 +94,8 @@ class FlashPopup extends FlxSpriteGroup
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		if(canLerp){
-			lerpScore = Math.floor(FlxMath.lerp(lerpScore, 0, boundTo(elapsed * 4, 0, 1)/1.5));
+		if(canLerp) {
+			lerpScore = Math.floor(FlxMath.lerp(lerpScore, 0, boundTo(elapsed * 4, 0, 1) / 1.5));
 			if(Math.abs(0 - lerpScore) < 10) lerpScore = 0;
 		}
 
