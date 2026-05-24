@@ -1,6 +1,5 @@
 package objects;
 
-import flixel.system.FlxShader;
 import flixel.FlxCamera;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -12,6 +11,7 @@ import flixel.tweens.FlxEase;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
 
+import shaders.flixel.system.FlxShader;
 import shaders.ColorShader;
 
 class FlashPopup extends FlxSpriteGroup
