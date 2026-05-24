@@ -2685,6 +2685,10 @@ class PlayState extends MusicBeatState
 
 				if (storyPlaylist.length <= 0)
 				{
+					var flashValue:Int = Std.int(campaignScore / 600);
+					add(new FlashPopup(flashValue, camOther));
+					new FlxTimer().start(4, function(tmr:FlxTimer)
+					{
 					Mods.loadTopMod();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
@@ -2700,6 +2704,7 @@ class PlayState extends MusicBeatState
 						FlxG.save.flush();
 					}
 					changedDifficulty = false;
+					});
 				}
 				else
 				{
@@ -2721,12 +2726,17 @@ class PlayState extends MusicBeatState
 			else
 			{
 				trace('WENT BACK TO FREEPLAY??');
+				var flashValue:Int = Std.int(campaignScore / 600);
+				add(new FlashPopup(flashValue, camOther));
+				new FlxTimer().start(4, function(tmr:FlxTimer)
+				{
 				Mods.loadTopMod();
 				#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
+				});
 			}
 			transitioning = true;
 		}
