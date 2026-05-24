@@ -2726,7 +2726,7 @@ class PlayState extends MusicBeatState
 			else
 			{
 				trace('WENT BACK TO FREEPLAY??');
-				var flashValue:Int = Std.int(campaignScore / 600);
+				var flashValue:Int = Std.int(songScore / 600);
 				add(new FlashPopup(flashValue, camOther));
 				new FlxTimer().start(4, function(tmr:FlxTimer)
 				{
