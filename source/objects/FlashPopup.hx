@@ -30,7 +30,7 @@ class FlashPopup extends FlxSpriteGroup
 
 		ClientPrefs.flashes += amount;
 
-		var colorShader:ColorShader = new ColorShader(0);
+		// var colorShader:ColorShader = new ColorShader(0);
 
 		ClientPrefs.saveSettings();
 		popupBG = new FlxSprite(FlxG.width - 300, 0).makeGraphic(300, 100, 0xF80000FF);
@@ -46,7 +46,7 @@ class FlashPopup extends FlxSpriteGroup
 		add(flash);	
 
 		flashTxt = new FlxText(popupBG.x + 90, popupBG.y + 35, 200, Std.string(amount), 35);
-		theText.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		flashTxt.setPosition(popupBG.getGraphicMidpoint().x - 10, popupBG.getGraphicMidpoint().y - (flashTxt.height / 2));
 		flashTxt.updateHitbox();
 		flashTxt.borderSize = 3;
@@ -54,16 +54,16 @@ class FlashPopup extends FlxSpriteGroup
 		flashTxt.antialiasing = true;
 		add(flashTxt);
 
-		flash.shader = colorShader.shader;
-		flashTxt.shader = colorShader.shader;
+		// flash.shader = colorShader.shader;
+		// flashTxt.shader = colorShader.shader;
 
 		FlxTween.tween(this, {y: 0}, 0.35, {ease: FlxEase.circOut});
 
 		new FlxTimer().start(0.9, function(tmr:FlxTimer)
 		{
 			canLerp = true;
-			colorShader.amount = 1;
-			FlxTween.tween(colorShader, {amount: 0}, 0.8, {ease: FlxEase.expoOut});
+			// colorShader.amount = 1;
+			// FlxTween.tween(colorShader, {amount: 0}, 0.8, {ease: FlxEase.expoOut});
 			FlxG.sound.play(Paths.sound('getflash'), 0.9);
 		});
 
