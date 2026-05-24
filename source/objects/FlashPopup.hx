@@ -1,5 +1,6 @@
 package objects;
 
+import flixel.system.FlxShader;
 import flixel.FlxCamera;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -10,6 +11,8 @@ import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
+
+import shaders.ColorShader;
 
 class FlashPopup extends FlxSpriteGroup
 {
@@ -30,7 +33,7 @@ class FlashPopup extends FlxSpriteGroup
 
 		ClientPrefs.flashes += amount;
 
-		// var colorShader:ColorShader = new ColorShader(0);
+		var colorShader:ColorShader = new ColorShader(0);
 
 		ClientPrefs.saveSettings();
 		popupBG = new FlxSprite(FlxG.width - 300, 0).makeGraphic(300, 100, 0xF80000FF);
@@ -54,16 +57,16 @@ class FlashPopup extends FlxSpriteGroup
 		flashTxt.antialiasing = true;
 		add(flashTxt);
 
-		// flash.shader = colorShader.shader;
-		// flashTxt.shader = colorShader.shader;
+		flash.shader = colorShader.shader;
+		flashTxt.shader = colorShader.shader;
 
 		FlxTween.tween(this, {y: 0}, 0.35, {ease: FlxEase.circOut});
 
 		new FlxTimer().start(0.9, function(tmr:FlxTimer)
 		{
 			canLerp = true;
-			// colorShader.amount = 1;
-			// FlxTween.tween(colorShader, {amount: 0}, 0.8, {ease: FlxEase.expoOut});
+			colorShader.amount = 1;
+			FlxTween.tween(colorShader, {amount: 0}, 0.8, {ease: FlxEase.expoOut});
 			FlxG.sound.play(Paths.sound('getflash'), 0.9);
 		});
 
