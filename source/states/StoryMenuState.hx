@@ -171,14 +171,14 @@ class StoryMenuState extends MusicBeatState
 		// Flash HUD
 		localFlash = ClientPrefs.flashes;
 
-		flash = new FlxSprite(30, 100).loadGraphic(Paths.image('flash'));
+		flash = new FlxSprite(FlxG.width - 30, FlxG.height - 100).loadGraphic(Paths.image('flash'));
         flash.antialiasing = true;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
 		add(flash);
 		// flashSelectors.add(flash);	
 
-        flashTxt = new FlxText(110, 105, 200, '---', 35);
+        flashTxt = new FlxText(FlxG.width - 110, FlxG.height - 105, 200, '---', 35);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         flashTxt.updateHitbox();
 		flashTxt.borderSize = 3;
@@ -393,7 +393,7 @@ class StoryMenuState extends MusicBeatState
 		} else {
 			/*if ()
 			{*/
-				FlxG.sound.play(Paths.sound('deniedflash'));
+				FlxG.sound.play(Paths.sound('flash/deniedflash'));
 			//}
 		}
 	}
