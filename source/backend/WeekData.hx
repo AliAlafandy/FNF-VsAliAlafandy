@@ -111,6 +111,10 @@ class WeekData {
 						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay))) {
 							weeksLoaded.set(sexList[i], weekFile);
 							weeksList.push(sexList[i]);
+
+							// My system, stupid
+							weekFlashCost.push(weekFile.flashCost);
+							weekUnlocked.push(!weekFile.startLocked);
 						}
 					}
 				}
