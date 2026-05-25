@@ -19,11 +19,17 @@ typedef WeekFile =
 	var hideStoryMode:Bool;
 	var hideFreeplay:Bool;
 	var difficulties:String;
+	var flashCost:Int;
 }
 
 class WeekData {
 	public static var weeksLoaded:Map<String, WeekData> = new Map<String, WeekData>();
 	public static var weeksList:Array<String> = [];
+
+	// wew
+	public static var weekFlashCost:Array<Int> = [];
+	public static var weekUnlocked:Array<Bool> = [];
+
 	public var folder:String = '';
 	
 	// JSON variables
@@ -39,6 +45,7 @@ class WeekData {
 	public var hideStoryMode:Bool;
 	public var hideFreeplay:Bool;
 	public var difficulties:String;
+	public var flashCost:Int;
 
 	public var fileName:String;
 
@@ -55,7 +62,8 @@ class WeekData {
 			hiddenUntilUnlocked: false,
 			hideStoryMode: false,
 			hideFreeplay: false,
-			difficulties: ''
+			difficulties: '',
+			flashCost: 0
 		};
 		return weekFile;
 	}
