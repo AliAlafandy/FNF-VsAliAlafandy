@@ -114,7 +114,7 @@ class WeekData {
 
 							// My system, stupid
 							weekFlashCost.push(weekFile.flashCost);
-							weekUnlocked.push(!weekFile.startLocked);
+							weekUnlocked.push(weekFile.startUnlocked);
 						}
 					}
 				}
