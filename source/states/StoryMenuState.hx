@@ -171,7 +171,7 @@ class StoryMenuState extends MusicBeatState
 		// Flash HUD
 		localFlash = ClientPrefs.flashes;
 
-		flash = new FlxSprite(FlxG.width - 30, FlxG.height - 100).loadGraphic(Paths.image('flash'));
+		flash = new FlxSprite(FlxG.width - 130, FlxG.height - 100).loadGraphic(Paths.image('flash'));
         flash.antialiasing = true;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
