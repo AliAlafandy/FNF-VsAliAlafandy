@@ -254,7 +254,7 @@ class WeekEditorState extends MusicBeatState
 		blockPressWhileTypingOn.push(difficultiesInputText);
 
 		// wow
-		flashCostNumericStepper = new FlxUINumericStepper(10, difficultiesInputText.y + 95, 1, weekFile.flashCost, 0, 999999, 0);
+		flashCostNumericStepper = new FlxUINumericStepper(lockedCheckbox.x + 75, 30, 1, weekFile.flashCost, 0, 999999, 0); // difficultiesInputText.y + 95
 
 		tab_group.add(new FlxText(weekBeforeInputText.x, weekBeforeInputText.y - 28, 0, 'Week File name of the Week you have\nto finish for Unlocking:'));
 		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y - 20, 0, 'Difficulties:'));
