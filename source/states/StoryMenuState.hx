@@ -391,14 +391,14 @@ class StoryMenuState extends MusicBeatState
 			DiscordClient.loadModRPC();
 			#end
 		} else {
-			var flashCost:Int = weekFlashCost[curWeek];
+			var flashCost:Int = WeekData.weekFlashCost[curWeek];
 
     		if (ClientPrefs.flashes >= flashCost)
     		{
         		if (controls.ACCEPT)
         		{
             		ClientPrefs.flashes -= flashCost;
-            		weekUnlocked[curWeek] = true;
+            		WeekData.weekUnlocked[curWeek] = true;
             		FlxG.sound.play(Paths.sound('flash/buyflash'));
             		ClientPrefs.saveSettings();
         		}
