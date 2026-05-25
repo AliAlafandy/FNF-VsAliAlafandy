@@ -131,6 +131,9 @@ class StoryMenuState extends MusicBeatState
 		difficultySelectors = new FlxGroup();
 		add(difficultySelectors);
 
+		flashSelectors = new FlxGroup();
+		add(flashSelectors);
+
 		leftArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width + 10, grpWeekText.members[0].y + 10);
 		leftArrow.antialiasing = ClientPrefs.data.antialiasing;
 		leftArrow.frames = ui_tex;
@@ -169,7 +172,7 @@ class StoryMenuState extends MusicBeatState
         flash.antialiasing = true;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
-		add(flash);	
+		flashSelectors.add(flash);	
 
         flashTxt = new FlxText(110, 105, 200, '---', 35);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -177,7 +180,7 @@ class StoryMenuState extends MusicBeatState
 		flashTxt.borderSize = 3;
         flashTxt.scrollFactor.set();
         flashTxt.antialiasing = true;
-        add(flashTxt);
+        flashSelectors.add(flashTxt);
 
 		flashTxt.text = Std.string(localFlash);
 
@@ -385,7 +388,7 @@ class StoryMenuState extends MusicBeatState
 		} else {
 			/*if ()
 			{*/
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxG.sound.play(Paths.sound('deniedflash'));
 			//}
 		}
 	}
@@ -471,6 +474,9 @@ class StoryMenuState extends MusicBeatState
 		Difficulty.loadFromWeek();
 		difficultySelectors.visible = unlocked;
 
+		if(difficultySelectors.visible == false)
+			flashSelectors.y -= 120;
+
 		if(Difficulty.list.contains(Difficulty.getDefault()))
 			curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(Difficulty.getDefault())));
 		else
@@ -487,7 +493,7 @@ class StoryMenuState extends MusicBeatState
 
 	function weekIsLocked(name:String):Bool {
 		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
-		return (!leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore)));
+		return (!leWeek.startUnlocked); // && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
 	}
 
 	function updateText()
