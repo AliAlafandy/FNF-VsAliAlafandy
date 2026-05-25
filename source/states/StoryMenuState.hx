@@ -41,6 +41,9 @@ class StoryMenuState extends MusicBeatState
 
 	var loadedWeeks:Array<WeekData> = [];
 
+	// Our business
+	var localFlash:Int;
+
 	override function create()
 	{
 		Paths.clearStoredMemory();
@@ -158,6 +161,25 @@ class StoryMenuState extends MusicBeatState
 		add(bgYellow);
 		add(bgSprite);
 		add(grpWeekCharacters);
+
+		// Flash HUD
+		localFlash = ClientPrefs.flashes;
+
+		flash = new FlxSprite(30, 100).loadGraphic(Paths.image('flash'));
+        flash.antialiasing = true;
+        flash.updateHitbox();
+		flash.scale.set(0.3, 0.3);
+		add(flash);	
+
+        flashTxt = new FlxText(110, 105, 200, '---', 35);
+		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        flashTxt.updateHitbox();
+		flashTxt.borderSize = 3;
+        flashTxt.scrollFactor.set();
+        flashTxt.antialiasing = true;
+        add(flashTxt);
+
+		flashTxt.text = Std.string(localFlash);
 
 		var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.y + 425).loadGraphic(Paths.image('Menu_Tracks'));
 		tracksSprite.antialiasing = ClientPrefs.data.antialiasing;
@@ -282,6 +304,9 @@ class StoryMenuState extends MusicBeatState
 
 		if (controls.BACK && !movedBack && !selectedWeek)
 		{
+			ClientPrefs.flashes = localFlash;
+			ClientPrefs.saveSettings();
+
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
 			MusicBeatState.switchState(new MainMenuState());
@@ -357,8 +382,12 @@ class StoryMenuState extends MusicBeatState
 			#if (MODS_ALLOWED && DISCORD_ALLOWED)
 			DiscordClient.loadModRPC();
 			#end
+		} else {
+			/*if ()
+			{*/
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+			//}
 		}
-		else FlxG.sound.play(Paths.sound('cancelMenu'));
 	}
 
 	var tweenDifficulty:FlxTween;
