@@ -35,6 +35,8 @@ class StoryMenuState extends MusicBeatState
 	var grpLocks:FlxTypedGroup<FlxSprite>;
 
 	var difficultySelectors:FlxGroup;
+	var flashSelectors:FlxGroup;
+
 	var sprDifficulty:FlxSprite;
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
