@@ -226,6 +226,7 @@ class WeekEditorState extends MusicBeatState
 	var difficultiesInputText:FlxUIInputText;
 	var lockedCheckbox:FlxUICheckBox;
 	var hiddenUntilUnlockCheckbox:FlxUICheckBox;
+	var flashCostNumericStepper:FlxUINumericStepper;
 
 	function addOtherUI() {
 		var tab_group = new FlxUI(null, UI_box);
@@ -251,14 +252,22 @@ class WeekEditorState extends MusicBeatState
 
 		difficultiesInputText = new FlxUIInputText(10, weekBeforeInputText.y + 60, 200, '', 8);
 		blockPressWhileTypingOn.push(difficultiesInputText);
-		
+
+		// wow
+		flashCostNumericStepper = new FlxUINumericStepper(10, difficultiesInputText.y + 95, 1, weekFile.flashCost, 0, 999999, 0);
+
 		tab_group.add(new FlxText(weekBeforeInputText.x, weekBeforeInputText.y - 28, 0, 'Week File name of the Week you have\nto finish for Unlocking:'));
 		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y - 20, 0, 'Difficulties:'));
 		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y + 20, 0, 'Default difficulties are "Easy, Normal, Hard"\nwithout quotes.'));
+
+		//lol
+		tab_group.add(new FlxText(flashCostNumericStepper.x, flashCostNumericStepper - 20, 'Flash Cost:'));
+
 		tab_group.add(weekBeforeInputText);
 		tab_group.add(difficultiesInputText);
 		tab_group.add(hiddenUntilUnlockCheckbox);
 		tab_group.add(lockedCheckbox);
+		tab_group.add(flashCostNumericStepper);
 		UI_box.addGroup(tab_group);
 	}
 
@@ -411,6 +420,8 @@ class WeekEditorState extends MusicBeatState
 				weekFile.weekBefore = weekBeforeInputText.text.trim();
 			} else if(sender == difficultiesInputText) {
 				weekFile.difficulties = difficultiesInputText.text.trim();
+			} else if(sender == flashCostNumericStepper) {
+        		weekFile.flashCost = Std.int(flashCostStepper.value);
 			}
 		}
 	}
@@ -423,6 +434,8 @@ class WeekEditorState extends MusicBeatState
 
 			reloadAllShit();
 		}
+
+		weekFile.flashCost = Std.int(flashCostNumericStepper.value);
 
 		var blockInput:Bool = false;
 		for (inputText in blockPressWhileTypingOn) {
