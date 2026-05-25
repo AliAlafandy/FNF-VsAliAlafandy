@@ -45,6 +45,7 @@ class StoryMenuState extends MusicBeatState
 	var localFlash:Int;
 	var flash:FlxSprite;
 	var flashTxt:FlxText;
+	var fCost:FlxText;
 	// var flashSelectors:FlxGroup;
 
 	override function create()
@@ -163,6 +164,14 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
 		rightArrow.animation.play('idle');
 		difficultySelectors.add(rightArrow);
+
+		fCost = new FlxText(leftArrow.x, leftArrow.y, 200, 'Cost: ' + WeekData.weekFlashCost[curWeek], 35);
+		fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        fCost.updateHitbox();
+		fCost.borderSize = 3;
+        fCost.scrollFactor.set();
+        fCost.antialiasing = true;
+		add(fCost);
 
 		add(bgYellow);
 		add(bgSprite);
@@ -494,6 +503,8 @@ class StoryMenuState extends MusicBeatState
 		Difficulty.loadFromWeek();
 		difficultySelectors.visible = unlocked;
 
+		fCost.visible != unlocked;
+
 		/*if(difficultySelectors.visible == false)
 			flashSelectors.y -= 120;*/
 
@@ -513,7 +524,7 @@ class StoryMenuState extends MusicBeatState
 
 	function weekIsLocked(name:String):Bool {
 		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
-		return (!leWeek.startUnlocked); // && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
+		return !WeekData.weekUnlocked[curWeek]; // name - !leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
 	}
 
 	function updateText()
