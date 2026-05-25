@@ -261,7 +261,7 @@ class WeekEditorState extends MusicBeatState
 		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y + 20, 0, 'Default difficulties are "Easy, Normal, Hard"\nwithout quotes.'));
 
 		//lol
-		tab_group.add(new FlxText(flashCostNumericStepper.x, flashCostNumericStepper - 20, 'Flash Cost:'));
+		tab_group.add(new FlxText(flashCostNumericStepper.x, flashCostNumericStepper - 20, 0, 'Flash Cost:'));
 
 		tab_group.add(weekBeforeInputText);
 		tab_group.add(difficultiesInputText);
@@ -421,7 +421,7 @@ class WeekEditorState extends MusicBeatState
 			} else if(sender == difficultiesInputText) {
 				weekFile.difficulties = difficultiesInputText.text.trim();
 			} else if(sender == flashCostNumericStepper) {
-        		weekFile.flashCost = Std.int(flashCostStepper.value);
+        		weekFile.flashCost = Std.int(flashCostNumericStepper.value);
 			}
 		}
 	}
