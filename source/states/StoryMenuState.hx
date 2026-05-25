@@ -391,10 +391,25 @@ class StoryMenuState extends MusicBeatState
 			DiscordClient.loadModRPC();
 			#end
 		} else {
-			/*if ()
-			{*/
-				FlxG.sound.play(Paths.sound('flash/deniedflash'));
-			//}
+			var flashCost:Int = weekFlashCost[curWeek];
+
+    		if (ClientPrefs.flashes >= flashCost)
+    		{
+        		if (controls.ACCEPT)
+        		{
+            		ClientPrefs.flashes -= flashCost;
+            		weekUnlocked[curWeek] = true;
+            		FlxG.sound.play(Paths.sound('flash/buyflash'));
+            		ClientPrefs.saveSettings();
+        		}
+			} else {
+        		if (controls.ACCEPT)
+        		{
+            		FlxG.sound.play(Paths.sound('flash/deniedflash'));
+        		}
+    		}
+
+    		return;
 		}
 	}
 
