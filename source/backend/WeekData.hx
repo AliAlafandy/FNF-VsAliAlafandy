@@ -26,10 +26,6 @@ class WeekData {
 	public static var weeksLoaded:Map<String, WeekData> = new Map<String, WeekData>();
 	public static var weeksList:Array<String> = [];
 
-	// wew
-	public static var weekFlashCost:Array<Int> = [];
-	public static var weekUnlocked:Array<Bool> = [];
-
 	public var folder:String = '';
 	
 	// JSON variables
@@ -111,10 +107,6 @@ class WeekData {
 						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay))) {
 							weeksLoaded.set(sexList[i], weekFile);
 							weeksList.push(sexList[i]);
-
-							// My system, stupid
-							weekFlashCost.push(weekFile.flashCost);
-							weekUnlocked.push(weekFile.startUnlocked);
 						}
 					}
 				}
