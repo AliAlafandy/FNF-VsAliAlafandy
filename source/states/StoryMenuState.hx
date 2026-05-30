@@ -165,7 +165,7 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.animation.play('idle');
 		difficultySelectors.add(rightArrow);
 
-		fCost = new FlxText(leftArrow.x, leftArrow.y, 200, 'Cost: ' + WeekData.weekFlashCost[curWeek], 35);
+		fCost = new FlxText(leftArrow.x + 50, leftArrow.y + 50, 200, 'Cost: ' + WeekData.weekFlashCost[curWeek], 35);
 		fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         fCost.updateHitbox();
 		fCost.borderSize = 3;
@@ -180,7 +180,7 @@ class StoryMenuState extends MusicBeatState
 		// Flash HUD
 		localFlash = ClientPrefs.flashes;
 
-		flash = new FlxSprite(FlxG.width - 130, FlxG.height - 100).loadGraphic(Paths.image('flash'));
+		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 50).loadGraphic(Paths.image('flash'));
         flash.antialiasing = true;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
@@ -401,13 +401,15 @@ class StoryMenuState extends MusicBeatState
 			#end
 		} else {
 			var flashCost:Int = WeekData.weekFlashCost[curWeek];
+			var leWeek:WeekData = WeekData.weeksLoaded.get(name);
 
     		if (ClientPrefs.flashes >= flashCost)
     		{
         		if (controls.ACCEPT)
         		{
+					persistentUpdate = true;
             		ClientPrefs.flashes -= flashCost;
-            		WeekData.weekUnlocked[curWeek] = true;
+            		leWeek.weekUnlocked[curWeek] = true;
             		FlxG.sound.play(Paths.sound('flash/buyflash'));
             		ClientPrefs.saveSettings();
         		}
@@ -503,7 +505,7 @@ class StoryMenuState extends MusicBeatState
 		Difficulty.loadFromWeek();
 		difficultySelectors.visible = unlocked;
 
-		fCost.visible != unlocked;
+		fCost.visible = !unlocked;
 
 		/*if(difficultySelectors.visible == false)
 			flashSelectors.y -= 120;*/
@@ -524,7 +526,7 @@ class StoryMenuState extends MusicBeatState
 
 	function weekIsLocked(name:String):Bool {
 		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
-		return !WeekData.weekUnlocked[curWeek]; // name - !leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
+		return !leWeek.weekUnlocked[curWeek]; // name -  !leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
 	}
 
 	function updateText()
