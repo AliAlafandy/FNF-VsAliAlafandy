@@ -400,8 +400,8 @@ class StoryMenuState extends MusicBeatState
 			DiscordClient.loadModRPC();
 			#end
 		} else {
-			var flashCost:Int = WeekData.flashCost;
-			var leWeek:WeekData = WeekData.weeksLoaded.get(name);
+			var leWeek:WeekData = WeekData.weeksLoaded.get(curWeek);
+			var flashCost:Int = leWeek.flashCost;
 
     		if (ClientPrefs.flashes >= flashCost)
     		{
