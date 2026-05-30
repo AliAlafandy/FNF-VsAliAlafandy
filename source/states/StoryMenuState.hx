@@ -118,6 +118,14 @@ class StoryMenuState extends MusicBeatState
 					lock.animation.play('lock');
 					lock.ID = i;
 					grpLocks.add(lock);
+
+					fCost = new FlxText(leftArrow.x + 50, leftArrow.y + 50, 200, 'Cost: ' + weekFile.flashCost, 35);
+					fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        			fCost.updateHitbox();
+					fCost.borderSize = 3;
+        			fCost.scrollFactor.set();
+        			fCost.antialiasing = ClientPrefs.data.antialiasing;
+					add(fCost);
 				}
 				num++;
 			}
@@ -165,14 +173,6 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.animation.play('idle');
 		difficultySelectors.add(rightArrow);
 
-		fCost = new FlxText(leftArrow.x + 50, leftArrow.y + 50, 200, 'Cost: ' + WeekData.weekFlashCost[curWeek], 35);
-		fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        fCost.updateHitbox();
-		fCost.borderSize = 3;
-        fCost.scrollFactor.set();
-        fCost.antialiasing = true;
-		add(fCost);
-
 		add(bgYellow);
 		add(bgSprite);
 		add(grpWeekCharacters);
@@ -181,7 +181,7 @@ class StoryMenuState extends MusicBeatState
 		localFlash = ClientPrefs.flashes;
 
 		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 50).loadGraphic(Paths.image('flash'));
-        flash.antialiasing = true;
+        flash.antialiasing = ClientPrefs.data.antialiasing;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
 		add(flash);
@@ -192,7 +192,7 @@ class StoryMenuState extends MusicBeatState
         flashTxt.updateHitbox();
 		flashTxt.borderSize = 3;
         flashTxt.scrollFactor.set();
-        flashTxt.antialiasing = true;
+        flashTxt.antialiasing = ClientPrefs.data.antialiasing;
 		add(flashTxt);
         // flashSelectors.add(flashTxt);
 
@@ -400,7 +400,7 @@ class StoryMenuState extends MusicBeatState
 			DiscordClient.loadModRPC();
 			#end
 		} else {
-			var flashCost:Int = WeekData.weekFlashCost[curWeek];
+			var flashCost:Int = WeekData.flashCost;
 			var leWeek:WeekData = WeekData.weeksLoaded.get(name);
 
     		if (ClientPrefs.flashes >= flashCost)
@@ -409,7 +409,7 @@ class StoryMenuState extends MusicBeatState
         		{
 					persistentUpdate = true;
             		ClientPrefs.flashes -= flashCost;
-            		leWeek.weekUnlocked[curWeek] = true;
+            		leWeek.startUnlocked = true;
             		FlxG.sound.play(Paths.sound('flash/buyflash'));
             		ClientPrefs.saveSettings();
         		}
@@ -526,7 +526,7 @@ class StoryMenuState extends MusicBeatState
 
 	function weekIsLocked(name:String):Bool {
 		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
-		return (!leWeek.weekUnlocked[curWeek]); // name -  !leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
+		return (!leWeek.startUnlocked); // name - && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
 	}
 
 	function updateText()
