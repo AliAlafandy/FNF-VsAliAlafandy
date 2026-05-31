@@ -95,6 +95,7 @@ class StoryMenuState extends MusicBeatState
 		for (i in 0...WeekData.weeksList.length)
 		{
 			var weekFile:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
+			var leWeek:WeekData = WeekData.weeksLoaded.get(loadedWeeks[curWeek].fileName);
 			var isLocked:Bool = weekIsLocked(WeekData.weeksList[i]);
 			if(!isLocked || !weekFile.hiddenUntilUnlocked)
 			{
@@ -119,7 +120,7 @@ class StoryMenuState extends MusicBeatState
 					lock.ID = i;
 					grpLocks.add(lock);
 
-					fCost = new FlxText(leftArrow.x + 50, leftArrow.y + 50, 200, 'Cost: ' + weekFile.flashCost, 35);
+					fCost = new FlxText(leftArrow.x + 50, leftArrow.y + 50, 200, 'Cost: ' + leWeek.flashCost, 35);
 					fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         			fCost.updateHitbox();
 					fCost.borderSize = 3;
