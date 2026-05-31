@@ -41,17 +41,17 @@ class FlashPopup extends FlxSpriteGroup
 		popupBG.scrollFactor.set();
 		add(popupBG);
 
-		flash = new FlxSprite(90, flash.height / 2).loadGraphic(Paths.image('flash'));
-		// flash.setPosition(popupBG.getGraphicMidpoint().x - 90, popupBG.getGraphicMidpoint().y - (flash.height / 2));
+		flash = new FlxSprite(0, 0).loadGraphic(Paths.image('flash'));
+		flash.setPosition(popupBG.getGraphicMidpoint().x - 390, popupBG.getGraphicMidpoint().y - (flash.height / 2));
 		flash.antialiasing = true;
 		flash.updateHitbox();
 		flash.scrollFactor.set();
 		flash.scale.set(0.3, 0.3);
 		add(flash);
 
-		flashTxt = new FlxText(flash.x - 10, flash.y - (flashTxt.height / 2), 200, Std.string(amount), 35);
+		flashTxt = new FlxText(0, 0, 200, Std.string(amount), 35);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		// flashTxt.setPosition(popupBG.getGraphicMidpoint().x - 10, popupBG.getGraphicMidpoint().y - (flashTxt.height / 2));
+		flashTxt.setPosition(popupBG.getGraphicMidpoint().x - 310, popupBG.getGraphicMidpoint().y - (flashTxt.height / 2));
 		flashTxt.updateHitbox();
 		flashTxt.borderSize = 3;
 		flashTxt.scrollFactor.set();
