@@ -127,7 +127,7 @@ class StoryMenuState extends MusicBeatState
 					lock.ID = i;
 					grpLocks.add(lock);
 
-					var fCost:FlxText = new FlxText(grpWeekText.members[0].x + grpWeekText.members[0].width + 90, grpWeekText.members[0].y + 40, 200, 'Cost: ' + cost, 35);
+					var fCost:FlxText = new FlxText(grpWeekText.members[0].x + grpWeekText.members[0].width + 110, grpWeekText.members[0].y + 40, 200, 'Cost: ' + cost, 35);
 					fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         			fCost.updateHitbox();
 					fCost.borderSize = 3;
@@ -186,13 +186,13 @@ class StoryMenuState extends MusicBeatState
 		// Flash HUD
 		localFlash = ClientPrefs.flashes;
 
-		flash = new FlxSprite(FlxG.width - 150, FlxG.height - 150).loadGraphic(Paths.image('flash'));
+		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 250).loadGraphic(Paths.image('flash'));
         flash.antialiasing = ClientPrefs.data.antialiasing;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
 		add(flash);
 
-        flashTxt = new FlxText(FlxG.width - 150, FlxG.height - 125, 200, '---', 35);
+        flashTxt = new FlxText(FlxG.width - 150, FlxG.height - 150, 200, '---', 35);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         flashTxt.updateHitbox();
 		flashTxt.borderSize = 3;
@@ -238,11 +238,6 @@ class StoryMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.sound.music.volume < 0.7)
-		{
-			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-		}
-
 		// scoreText.setFormat('VCR OSD Mono', 32);
 		lerpScore = Math.floor(FlxMath.lerp(intendedScore, lerpScore, Math.exp(-elapsed * 30)));
 		if(Math.abs(intendedScore - lerpScore) < 10) lerpScore = intendedScore;
@@ -388,8 +383,7 @@ class StoryMenuState extends MusicBeatState
 
         	FlxG.save.flush();
         	FlxG.sound.play(Paths.sound('flash/buyflash'));
-
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
     	} else {
         	FlxG.sound.play(Paths.sound('flash/deniedflash'));
     	}
@@ -514,13 +508,22 @@ class StoryMenuState extends MusicBeatState
 		var bullShit:Int = 0;
 
 		var unlocked:Bool = !weekIsLocked(leWeek.fileName);
-		for (item in grpWeekText.members)
-		{
+		for (item in grpWeekText.members) {
 			item.targetY = bullShit - curWeek;
-			if (item.targetY == Std.int(0) && unlocked)
+
+			for (thing in grpFlashes.members) {
+				if (item.targetY == Std.int(0) && !unlocked) {
+					thing.visible = true;
+				} else {
+					thing.visible = false;
+				}
+			}
+
+			if (item.targetY == Std.int(0) && unlocked) {
 				item.alpha = 1;
-			else
+			} else {
 				item.alpha = 0.6;
+			}
 			bullShit++;
 		}
 
@@ -548,6 +551,14 @@ class StoryMenuState extends MusicBeatState
 			curDifficulty = newPos;
 		}
 		updateText();
+
+		var weekName:String = WeekData.weeksList[curWeek];
+		if(weekIsLocked(weekName))
+		{
+    		FlxG.sound.music.volume -= 0.5 * FlxG.elapsed;
+		} else {
+    		FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
+		}
 	}
 
 	function weekIsLocked(name:String):Bool {
