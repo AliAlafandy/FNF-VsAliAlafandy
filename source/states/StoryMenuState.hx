@@ -34,6 +34,8 @@ class StoryMenuState extends MusicBeatState
 
 	var grpLocks:FlxTypedGroup<FlxSprite>;
 
+	var grpFlashes:FlxTypedGroup<FlxText>;
+
 	var difficultySelectors:FlxGroup;
 	var sprDifficulty:FlxSprite;
 	var leftArrow:FlxSprite;
@@ -46,7 +48,6 @@ class StoryMenuState extends MusicBeatState
 	var flash:FlxSprite;
 	var flashTxt:FlxText;
 	// var fCost:FlxText;
-	// var flashSelectors:FlxGroup;
 
 	override function create()
 	{
@@ -85,6 +86,9 @@ class StoryMenuState extends MusicBeatState
 
 		grpLocks = new FlxTypedGroup<FlxSprite>();
 		add(grpLocks);
+
+		grpFlashes = new FlxTypedGroup<FlxText>();
+		add(grpFlashes);
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
@@ -130,7 +134,7 @@ class StoryMenuState extends MusicBeatState
         			fCost.scrollFactor.set();
         			fCost.antialiasing = ClientPrefs.data.antialiasing;
 					fCost.ID = i;
-					add(fCost);
+					grpFlashes.add(fCost);
 				}
 				num++;
 			}
@@ -147,9 +151,6 @@ class StoryMenuState extends MusicBeatState
 
 		difficultySelectors = new FlxGroup();
 		add(difficultySelectors);
-
-		/*flashSelectors = new FlxGroup();
-		add(flashSelectors);*/
 
 		leftArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width + 10, grpWeekText.members[0].y + 10);
 		leftArrow.antialiasing = ClientPrefs.data.antialiasing;
@@ -190,7 +191,6 @@ class StoryMenuState extends MusicBeatState
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
 		add(flash);
-		// flashSelectors.add(flash);	
 
         flashTxt = new FlxText(FlxG.width - 110, FlxG.height - 105, 200, '---', 35);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -199,7 +199,6 @@ class StoryMenuState extends MusicBeatState
         flashTxt.scrollFactor.set();
         flashTxt.antialiasing = ClientPrefs.data.antialiasing;
 		add(flashTxt);
-        // flashSelectors.add(flashTxt);
 
 		flashTxt.text = Std.string(localFlash);
 
@@ -519,9 +518,6 @@ class StoryMenuState extends MusicBeatState
 
 		Difficulty.loadFromWeek();
 		difficultySelectors.visible = unlocked;
-
-		/*if(difficultySelectors.visible == false)
-			flashSelectors.y -= 120;*/
 
 		if(Difficulty.list.contains(Difficulty.getDefault()))
 			curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(Difficulty.getDefault())));
