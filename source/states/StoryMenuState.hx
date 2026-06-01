@@ -99,6 +99,9 @@ class StoryMenuState extends MusicBeatState
 
 			var cost:Int = weekFile.flashCost;
 
+			if(cost < 0)
+				cost = 0;
+
 			if(!isLocked || !weekFile.hiddenUntilUnlocked)
 			{
 				loadedWeeks.push(weekFile);
