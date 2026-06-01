@@ -25,6 +25,9 @@ class FlashPopup extends FlxSpriteGroup
 	var lerpScore:Int = 0;
 	var canLerp:Bool = false;
 
+	var sinat:Int = 30;
+	var sinatTxt:Int = 110;
+
 	public function new(amount:Int, ?camera:FlxCamera = null)
 	{
 		super(x, y);
@@ -42,7 +45,7 @@ class FlashPopup extends FlxSpriteGroup
 		add(popupBG);
 
 		flash = new FlxSprite(0, 0).loadGraphic(Paths.image('flash'));
-		flash.setPosition(popupBG.getGraphicMidpoint().x + 190, popupBG.getGraphicMidpoint().y - (flash.height / 2));
+		flash.setPosition(popupBG.getGraphicMidpoint().x - sinat, popupBG.getGraphicMidpoint().y - (flash.height / 2));
 		flash.antialiasing = true;
 		flash.updateHitbox();
 		flash.scrollFactor.set();
@@ -51,7 +54,7 @@ class FlashPopup extends FlxSpriteGroup
 
 		flashTxt = new FlxText(0, 0, 200, Std.string(amount), 35);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		flashTxt.setPosition(popupBG.getGraphicMidpoint().x + 140, popupBG.getGraphicMidpoint().y - (flashTxt.height / 2));
+		flashTxt.setPosition(popupBG.getGraphicMidpoint().x - sinatTxt, popupBG.getGraphicMidpoint().y - (flashTxt.height / 2));
 		flashTxt.updateHitbox();
 		flashTxt.borderSize = 3;
 		flashTxt.scrollFactor.set();
@@ -100,8 +103,8 @@ class FlashPopup extends FlxSpriteGroup
 		}
 
 		flashTxt.text = Std.string(lerpScore);
-		flash.setPosition(popupBG.getGraphicMidpoint().x - 90, popupBG.getGraphicMidpoint().y - (flash.height / 2));
-		flashTxt.setPosition(popupBG.getGraphicMidpoint().x - 10, popupBG.getGraphicMidpoint().y - (flashTxt.height / 2));
+		flash.setPosition(popupBG.getGraphicMidpoint().x - sinat, popupBG.getGraphicMidpoint().y - (flash.height / 2));
+		flashTxt.setPosition(popupBG.getGraphicMidpoint().x - sinatTxt, popupBG.getGraphicMidpoint().y - (flashTxt.height / 2));
 	}
 
 	override function destroy()
