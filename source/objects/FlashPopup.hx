@@ -71,7 +71,7 @@ class FlashPopup extends FlxSpriteGroup
 			canLerp = true;
 			colorShader.amount = 1;
 			FlxTween.tween(colorShader, {amount: 0}, 0.8, {ease: FlxEase.expoOut});
-			FlxG.sound.play(Paths.sound('getflash'), 0.9);
+			FlxG.sound.play(Paths.sound('flash/getflash'), 0.9);
 		});
 
 		var cam:Array<FlxCamera> = FlxG.cameras.list;
