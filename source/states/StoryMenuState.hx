@@ -127,7 +127,7 @@ class StoryMenuState extends MusicBeatState
 					lock.ID = i;
 					grpLocks.add(lock);
 
-					var fCost:FlxText = new FlxText(leftArrow.x + 50, leftArrow.y + 50, 200, 'Cost: ' + cost, 35);
+					var fCost:FlxText = new FlxText(grpWeekText.members[0].x + grpWeekText.members[0].width + 60, grpWeekText.members[0].y + 60, 200, 'Cost: ' + cost, 35);
 					fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         			fCost.updateHitbox();
 					fCost.borderSize = 3;
