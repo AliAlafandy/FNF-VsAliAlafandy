@@ -133,7 +133,7 @@ class StoryMenuState extends MusicBeatState
 					fCost.borderSize = 3;
         			fCost.scrollFactor.set();
         			fCost.antialiasing = ClientPrefs.data.antialiasing;
-					fCost.ID = i;
+					// fCost.ID = i;
 					grpFlashes.add(fCost);
 				}
 				num++;
@@ -347,7 +347,10 @@ class StoryMenuState extends MusicBeatState
 		{
 			lock.y = grpWeekText.members[lock.ID].y;
 			lock.visible = (lock.y > FlxG.height / 2);
+		});
 
+		grpFlashes.forEach(function(fCost:FlxText)
+		{
 			fCost.visible = !difficultySelectors.visible;
 		});
 	}
