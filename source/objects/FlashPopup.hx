@@ -36,7 +36,7 @@ class FlashPopup extends FlxSpriteGroup
 		var colorShader:ColorShader = new ColorShader(0);
 
 		ClientPrefs.saveSettings();
-		popupBG = new FlxSprite(FlxG.width - 100, 0).makeGraphic(300, 100, 0xF80000FF);
+		popupBG = new FlxSprite(300, 0).makeGraphic(300, 100, 0xF80000FF); // FlxG.width - 300
 		popupBG.visible = false;
 		popupBG.scrollFactor.set();
 		add(popupBG);
