@@ -238,6 +238,11 @@ class StoryMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		if (FlxG.sound.music.volume < 0.7)
+		{
+			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
+		}
+
 		// scoreText.setFormat('VCR OSD Mono', 32);
 		lerpScore = Math.floor(FlxMath.lerp(intendedScore, lerpScore, Math.exp(-elapsed * 30)));
 		if(Math.abs(intendedScore - lerpScore) < 10) lerpScore = intendedScore;
@@ -383,6 +388,8 @@ class StoryMenuState extends MusicBeatState
 
         	FlxG.save.flush();
         	FlxG.sound.play(Paths.sound('flash/buyflash'));
+
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
     	} else {
         	FlxG.sound.play(Paths.sound('flash/deniedflash'));
     	}
@@ -546,6 +553,8 @@ class StoryMenuState extends MusicBeatState
 	function weekIsLocked(name:String):Bool {
 		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
 		return (!leWeek.startUnlocked && !weekIsPurchased(leWeek.fileName)); // name - && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
+
+		FlxG.sound.playMusic(Paths.music('freakyMenu'), 0.5);
 	}
 
 	function weekIsPurchased(name:String):Bool {
