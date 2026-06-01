@@ -320,7 +320,7 @@ class StoryMenuState extends MusicBeatState
     			var weekName:String = WeekData.weeksList[curWeek];
     			var weekFile:WeekData = WeekData.weeksLoaded.get(weekName);
 
-    			if(weekIsLocked(weekFile))
+    			if(weekIsLocked(weekName))
     			{
         			buyCurrentWeek();
     			} else {
@@ -358,7 +358,7 @@ class StoryMenuState extends MusicBeatState
     	var weekName:String = WeekData.weeksList[curWeek];
     	var weekFile:WeekData = WeekData.weeksLoaded.get(weekName);
 
-    	if(!weekIsLocked(weekFile))
+    	if(!weekIsLocked(weekName))
         	return;
 
     	if(ClientPrefs.flashes >= weekFile.flashCost)
