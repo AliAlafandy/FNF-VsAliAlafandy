@@ -127,7 +127,7 @@ class StoryMenuState extends MusicBeatState
 					lock.ID = i;
 					grpLocks.add(lock);
 
-					var fCost:FlxText = new FlxText(grpWeekText.members[0].x + grpWeekText.members[0].width + 60, grpWeekText.members[0].y + 60, 200, 'Cost: ' + cost, 35);
+					var fCost:FlxText = new FlxText(grpWeekText.members[0].x + grpWeekText.members[0].width + 110, grpWeekText.members[0].y + 60, 200, 'Cost: ' + cost, 35);
 					fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         			fCost.updateHitbox();
 					fCost.borderSize = 3;
@@ -302,7 +302,15 @@ class StoryMenuState extends MusicBeatState
 			}
 			else if (controls.ACCEPT)
 			{
-				selectWeek();
+				var weekName:String = WeekData.weeksList[curWeek];
+    			var weekFile:WeekData = WeekData.weeksLoaded.get(weekName);
+
+    			if(weekIsLocked(weekName))
+    			{
+        			buyCurrentWeek();
+    			} else {
+        			selectWeek();
+				}
 			}
 			#else
 			if(FlxG.keys.justPressed.CONTROL)
@@ -364,8 +372,7 @@ class StoryMenuState extends MusicBeatState
     	var weekName:String = WeekData.weeksList[curWeek];
     	var weekFile:WeekData = WeekData.weeksLoaded.get(weekName);
 
-    	if(!weekIsLocked(weekName))
-        	return;
+    	if(!weekIsLocked(weekName)) return;
 
     	if(ClientPrefs.flashes >= weekFile.flashCost)
     	{
@@ -538,10 +545,10 @@ class StoryMenuState extends MusicBeatState
 
 	function weekIsLocked(name:String):Bool {
 		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
-		return (!leWeek.startUnlocked || !isWeekPurchased(leWeek.fileName)); // name - && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
+		return (!leWeek.startUnlocked && !weekIsPurchased(leWeek.fileName)); // name - && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
 	}
 
-	public function isWeekPurchased(name:String):Bool {
+	function weekIsPurchased(name:String):Bool {
     	return ClientPrefs.purchasedWeeks.contains(name);
 	}
 
