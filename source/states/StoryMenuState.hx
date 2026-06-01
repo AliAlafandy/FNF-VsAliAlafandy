@@ -73,7 +73,7 @@ class StoryMenuState extends MusicBeatState
 		rankText.screenCenter(X);
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
-		var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51);
+		var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFF51CFF9);
 		bgSprite = new FlxSprite(0, 56);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
@@ -127,7 +127,7 @@ class StoryMenuState extends MusicBeatState
 					lock.ID = i;
 					grpLocks.add(lock);
 
-					var fCost:FlxText = new FlxText(grpWeekText.members[0].x + grpWeekText.members[0].width + 110, grpWeekText.members[0].y + 60, 200, 'Cost: ' + cost, 35);
+					var fCost:FlxText = new FlxText(grpWeekText.members[0].x + grpWeekText.members[0].width + 90, grpWeekText.members[0].y + 40, 200, 'Cost: ' + cost, 35);
 					fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         			fCost.updateHitbox();
 					fCost.borderSize = 3;
@@ -186,13 +186,13 @@ class StoryMenuState extends MusicBeatState
 		// Flash HUD
 		localFlash = ClientPrefs.flashes;
 
-		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 50).loadGraphic(Paths.image('flash'));
+		flash = new FlxSprite(FlxG.width - 150, FlxG.height - 150).loadGraphic(Paths.image('flash'));
         flash.antialiasing = ClientPrefs.data.antialiasing;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
 		add(flash);
 
-        flashTxt = new FlxText(FlxG.width - 110, FlxG.height - 105, 200, '---', 35);
+        flashTxt = new FlxText(FlxG.width - 150, FlxG.height - 125, 200, '---', 35);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         flashTxt.updateHitbox();
 		flashTxt.borderSize = 3;
