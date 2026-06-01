@@ -129,7 +129,8 @@ class StoryMenuState extends MusicBeatState
 					fCost.borderSize = 3;
         			fCost.scrollFactor.set();
         			fCost.antialiasing = ClientPrefs.data.antialiasing;
-					add(fCost);
+					fCost.ID = i;
+					grpLocks.add(fCost);
 				}
 				num++;
 			}
