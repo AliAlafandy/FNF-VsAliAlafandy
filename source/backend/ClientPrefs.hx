@@ -106,6 +106,7 @@ class ClientPrefs {
 
 	// Flash system
 	public static var flashes:Int = 0;
+	public static var purchasedWeeks:Array<String> = [];
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -209,6 +210,7 @@ class ClientPrefs {
 
 		// Flash section
 		FlxG.save.data.flashes = flashes;
+		FlxG.save.data.purchasedWeeks = purchasedWeeks;
 
 		//Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		var save:FlxSave = new FlxSave();
@@ -270,6 +272,9 @@ class ClientPrefs {
 		// Flash section
 		if(FlxG.save.data.flashes != null)
 			flashes = FlxG.save.data.flashes;
+
+		if(FlxG.save.data.purchasedWeeks != null)
+    		purchasedWeeks = FlxG.save.data.purchasedWeeks;
 
 		// controls on a separate save file
 		var save:FlxSave = new FlxSave();
