@@ -96,6 +96,9 @@ class StoryMenuState extends MusicBeatState
 		{
 			var weekFile:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
 			var isLocked:Bool = weekIsLocked(WeekData.weeksList[i]);
+
+			var cost:Int = (weekFile.flashCost != null) ? weekFile.flashCost : 0;
+
 			if(!isLocked || !weekFile.hiddenUntilUnlocked)
 			{
 				loadedWeeks.push(weekFile);
@@ -119,7 +122,7 @@ class StoryMenuState extends MusicBeatState
 					lock.ID = i;
 					grpLocks.add(lock);
 
-					fCost = new FlxText(leftArrow.x + 50, leftArrow.y + 50, 200, 'Cost: ' + WeekData.flashCost, 35);
+					fCost = new FlxText(leftArrow.x + 50, leftArrow.y + 50, 200, 'Cost: ' + cost, 35);
 					fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         			fCost.updateHitbox();
 					fCost.borderSize = 3;
@@ -314,7 +317,15 @@ class StoryMenuState extends MusicBeatState
 			}
 			else if (controls.ACCEPT)
 			{
-				selectWeek();
+    			var weekName:String = WeekData.weeksList[curWeek];
+    			var weekFile:WeekData = WeekData.weeksLoaded.get(weekName);
+
+    			if(weekIsLocked(weekFile))
+    			{
+        			buyCurrentWeek();
+    			} else {
+        			selectWeek();
+    			}
 			}
 			#end
 		}
@@ -341,6 +352,28 @@ class StoryMenuState extends MusicBeatState
 	var movedBack:Bool = false;
 	var selectedWeek:Bool = false;
 	var stopspamming:Bool = false;
+
+	public function buyCurrentWeek()
+	{
+    	var weekName:String = WeekData.weeksList[curWeek];
+    	var weekFile:WeekData = WeekData.weeksLoaded.get(weekName);
+
+    	if(!weekIsLocked(weekFile))
+        	return;
+
+    	if(ClientPrefs.flashes >= weekFile.flashCost)
+    	{
+			persistentUpdate = true;
+        	ClientPrefs.flashes -= weekFile.flashCost;
+        	ClientPrefs.purchasedWeeks.push(weekFile.fileName);
+        	ClientPrefs.saveSettings();
+
+        	FlxG.save.flush();
+        	FlxG.sound.play(Paths.sound('flash/buyflash'));
+    	} else {
+        	FlxG.sound.play(Paths.sound('flash/deniedflash'));
+    	}
+	}
 
 	function selectWeek()
 	{
@@ -399,28 +432,6 @@ class StoryMenuState extends MusicBeatState
 			#if (MODS_ALLOWED && DISCORD_ALLOWED)
 			DiscordClient.loadModRPC();
 			#end
-		} else {
-			var leWeek:WeekData = WeekData.weeksLoaded.get(loadedWeeks[curWeek].fileName);
-			var flashCost:Int = leWeek.flashCost;
-
-    		if (ClientPrefs.flashes >= flashCost)
-    		{
-        		if (controls.ACCEPT)
-        		{
-					persistentUpdate = true;
-            		ClientPrefs.flashes -= flashCost;
-            		leWeek.startUnlocked = true;
-            		FlxG.sound.play(Paths.sound('flash/buyflash'));
-            		ClientPrefs.saveSettings();
-        		}
-			} else {
-        		if (controls.ACCEPT)
-        		{
-            		FlxG.sound.play(Paths.sound('flash/deniedflash'));
-        		}
-    		}
-
-    		return;
 		}
 	}
 
@@ -526,7 +537,11 @@ class StoryMenuState extends MusicBeatState
 
 	function weekIsLocked(name:String):Bool {
 		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
-		return (!leWeek.startUnlocked); // name - && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
+		return (!leWeek.startUnlocked || !isWeekPurchased(leWeek.fileName)); // name - && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
+	}
+
+	public function isWeekPurchased(name:String):Bool {
+    	return ClientPrefs.purchasedWeeks.contains(name);
 	}
 
 	function updateText()
