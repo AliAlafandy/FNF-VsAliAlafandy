@@ -97,7 +97,7 @@ class StoryMenuState extends MusicBeatState
 			var weekFile:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
 			var isLocked:Bool = weekIsLocked(WeekData.weeksList[i]);
 
-			var cost:Int = (weekFile.flashCost != null) ? weekFile.flashCost : 0;
+			var cost:Int = weekFile.flashCost;
 
 			if(!isLocked || !weekFile.hiddenUntilUnlocked)
 			{
