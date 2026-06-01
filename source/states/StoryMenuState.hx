@@ -45,7 +45,7 @@ class StoryMenuState extends MusicBeatState
 	var localFlash:Int;
 	var flash:FlxSprite;
 	var flashTxt:FlxText;
-	var fCost:FlxText;
+	// var fCost:FlxText;
 	// var flashSelectors:FlxGroup;
 
 	override function create()
@@ -98,9 +98,7 @@ class StoryMenuState extends MusicBeatState
 			var isLocked:Bool = weekIsLocked(WeekData.weeksList[i]);
 
 			var cost:Int = weekFile.flashCost;
-
-			if(cost < 0)
-				cost = 0;
+			if(cost < 0) cost = 0;
 
 			if(!isLocked || !weekFile.hiddenUntilUnlocked)
 			{
@@ -125,7 +123,7 @@ class StoryMenuState extends MusicBeatState
 					lock.ID = i;
 					grpLocks.add(lock);
 
-					fCost = new FlxText(leftArrow.x + 50, leftArrow.y + 50, 200, 'Cost: ' + cost, 35);
+					var fCost:FlxText = new FlxText(leftArrow.x + 50, leftArrow.y + 50, 200, 'Cost: ' + cost, 35);
 					fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         			fCost.updateHitbox();
 					fCost.borderSize = 3;
