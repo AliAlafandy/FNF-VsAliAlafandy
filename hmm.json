@@ -4,8 +4,8 @@
       "name": "lime",
       "type": "git",
       "dir": null,
-      "ref": "main",
-      "url": "https://github.com/AlafandyPorting/lime-test"
+      "ref": "master",
+      "url": "https://github.com/AlafandyPorting/lime-0.7.3"
     },
     {
       "name": "openfl",
