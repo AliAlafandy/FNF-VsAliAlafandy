@@ -186,13 +186,13 @@ class StoryMenuState extends MusicBeatState
 		// Flash HUD
 		localFlash = ClientPrefs.flashes;
 
-		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 250).loadGraphic(Paths.image('flash'));
+		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 100).loadGraphic(Paths.image('flash'));
         flash.antialiasing = ClientPrefs.data.antialiasing;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
 		add(flash);
 
-        flashTxt = new FlxText(FlxG.width - 150, FlxG.height - 150, 200, '---', 35);
+        flashTxt = new FlxText(FlxG.width - 100, FlxG.height - 150, 200, '---', 35);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         flashTxt.updateHitbox();
 		flashTxt.borderSize = 3;
