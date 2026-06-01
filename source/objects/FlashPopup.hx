@@ -25,8 +25,8 @@ class FlashPopup extends FlxSpriteGroup
 	var lerpScore:Int = 0;
 	var canLerp:Bool = false;
 
-	var sinat:Int = 30;
-	var sinatTxt:Int = 110;
+	var sinat:Int = 270;
+	var sinatTxt:Int = 190;
 
 	public function new(amount:Int, ?camera:FlxCamera = null)
 	{
