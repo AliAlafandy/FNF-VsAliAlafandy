@@ -84,26 +84,26 @@ class WarningState extends MusicBeatState
 			#if mobile
 			warnTextMobile = new FlxText(0, 0, FlxG.width, warnMobile, 32);
 			warnTextMobile.setFormat("VCR OSD Mono", 32, FlxColor.CYAN, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			warnTextMobile.screenCenter(XY);
+			warnTextMobile.screenCenter(Y);
 			add(warnTextMobile);
 			#else
 			warnText = new FlxText(0, 0, FlxG.width, warn, 32);
 			warnText.setFormat("VCR OSD Mono", 32, FlxColor.CYAN, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			warnText.screenCenter(XY);
+			warnText.screenCenter(Y);
 			add(warnText);
 			#end
 
-			trace('Warning: System has less than 4 GB of RAM. Detected RAM: ' + ramGB + ' GB');
+			trace('Warning: System has less than ' + ramGuide + ' GB of RAM. Detected RAM: ' + ramGB + ' GB');
 		} else {
 			#if mobile
 			warnTextMobile = new FlxText(0, 0, FlxG.width, guhMobile, 32);
 			warnTextMobile.setFormat("VCR OSD Mono", 32, FlxColor.CYAN, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			warnTextMobile.screenCenter(XY);
+			warnTextMobile.screenCenter(Y);
 			add(warnTextMobile);
 			#else
 			warnText = new FlxText(0, 0, FlxG.width, guh, 32);
 			warnText.setFormat("VCR OSD Mono", 32, FlxColor.CYAN, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			warnText.screenCenter(XY);
+			warnText.screenCenter(Y);
 			add(warnText);
 			#end
 
