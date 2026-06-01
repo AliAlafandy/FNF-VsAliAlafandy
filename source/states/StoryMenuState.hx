@@ -347,6 +347,8 @@ class StoryMenuState extends MusicBeatState
 		{
 			lock.y = grpWeekText.members[lock.ID].y;
 			lock.visible = (lock.y > FlxG.height / 2);
+
+			fCost.visible = !difficultySelectors.visible;
 		});
 	}
 
@@ -516,8 +518,6 @@ class StoryMenuState extends MusicBeatState
 
 		Difficulty.loadFromWeek();
 		difficultySelectors.visible = unlocked;
-
-		fCost.visible = !unlocked;
 
 		/*if(difficultySelectors.visible == false)
 			flashSelectors.y -= 120;*/
