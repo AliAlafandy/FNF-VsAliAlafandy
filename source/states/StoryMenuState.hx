@@ -127,7 +127,7 @@ class StoryMenuState extends MusicBeatState
 					lock.ID = i;
 					grpLocks.add(lock);
 
-					var fCost:FlxText = new FlxText(grpWeekText.members[0].x + grpWeekText.members[0].width + 110, grpWeekText.members[0].y + 40, 200, 'Cost: ' + cost, 35);
+					var fCost:FlxText = new FlxText(grpWeekText.members[0].x + grpWeekText.members[0].width + 110, grpWeekText.members[0].y + 40, 400, 'Cost: ' + cost, 35);
 					fCost.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         			fCost.updateHitbox();
 					fCost.borderSize = 3;
@@ -186,7 +186,7 @@ class StoryMenuState extends MusicBeatState
 		// Flash HUD
 		localFlash = ClientPrefs.flashes;
 
-		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 100).loadGraphic(Paths.image('flash'));
+		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 130).loadGraphic(Paths.image('flash'));
         flash.antialiasing = ClientPrefs.data.antialiasing;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
@@ -511,17 +511,16 @@ class StoryMenuState extends MusicBeatState
 		for (item in grpWeekText.members) {
 			item.targetY = bullShit - curWeek;
 
-			for (thing in grpFlashes.members) {
-				if (item.targetY == Std.int(0) && !unlocked) {
-					thing.visible = true;
-				} else {
-					thing.visible = false;
-				}
-			}
-
 			if (item.targetY == Std.int(0) && unlocked) {
 				item.alpha = 1;
 			} else {
+				for (thing in grpFlashes.members) {
+					if (item.targetY == Std.int(0)) {
+						thing.visible = true;
+					} else {
+						thing.visible = false;
+					}
+				}
 				item.alpha = 0.6;
 			}
 			bullShit++;
@@ -564,8 +563,6 @@ class StoryMenuState extends MusicBeatState
 	function weekIsLocked(name:String):Bool {
 		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
 		return (!leWeek.startUnlocked && !weekIsPurchased(leWeek.fileName)); // name - && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore))
-
-		FlxG.sound.playMusic(Paths.music('freakyMenu'), 0.5);
 	}
 
 	function weekIsPurchased(name:String):Bool {
