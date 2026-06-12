@@ -192,7 +192,7 @@ class StoryMenuState extends MusicBeatState
 		flash.scale.set(0.3, 0.3);
 		add(flash);
 
-        flashTxt = new FlxText(FlxG.width - 100, FlxG.height - 150, 200, '---', 35);
+        flashTxt = new FlxText(FlxG.width - 70, FlxG.height - 150, 200, '---', 35);
 		flashTxt.setFormat(Paths.font("vcr.ttf"), 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         flashTxt.updateHitbox();
 		flashTxt.borderSize = 3;
@@ -509,21 +509,20 @@ class StoryMenuState extends MusicBeatState
 
 		var unlocked:Bool = !weekIsLocked(leWeek.fileName);
 		for (item in grpWeekText.members) {
-			item.targetY = bullShit - curWeek;
-
-			if (item.targetY == Std.int(0) && unlocked) {
-				item.alpha = 1;
-			} else {
-				for (thing in grpFlashes.members) {
+			for (thing in grpFlashes.members) {
+				item.targetY = bullShit - curWeek;
+				if (item.targetY == Std.int(0) && unlocked) {
+					item.alpha = 1;
+				} else {
 					if (item.targetY == Std.int(0)) {
 						thing.visible = true;
 					} else {
 						thing.visible = false;
 					}
+					item.alpha = 0.6;
 				}
-				item.alpha = 0.6;
+				bullShit++;
 			}
-			bullShit++;
 		}
 
 		bgSprite.visible = true;
