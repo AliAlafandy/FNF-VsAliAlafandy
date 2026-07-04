@@ -101,8 +101,18 @@ class StoryMenuState extends MusicBeatState
 			var weekFile:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
 			var isLocked:Bool = weekIsLocked(WeekData.weeksList[i]);
 
-			var cost:Int = weekFile.flashCost;
-			if(cost < 0) cost = 0;
+			var leWeek:WeekData = loadedWeeks[curWeek];
+			var costThing:Array<Int> = [];
+			for (i in 0...leWeek.flashCost.length) {
+				costThing.push(leWeek.flashCost[i]);
+			}
+
+			var cost:Int;
+
+			for (i in 0...costThing.length) {
+				cost = costThing[i];
+				if(cost < 0) cost = 0;
+			}
 
 			if(!isLocked || !weekFile.hiddenUntilUnlocked)
 			{
@@ -186,7 +196,7 @@ class StoryMenuState extends MusicBeatState
 		// Flash HUD
 		localFlash = ClientPrefs.flashes;
 
-		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 130).loadGraphic(Paths.image('flash'));
+		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 115).loadGraphic(Paths.image('flash'));
         flash.antialiasing = ClientPrefs.data.antialiasing;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
@@ -509,20 +519,13 @@ class StoryMenuState extends MusicBeatState
 
 		var unlocked:Bool = !weekIsLocked(leWeek.fileName);
 		for (item in grpWeekText.members) {
-			for (thing in grpFlashes.members) {
-				item.targetY = bullShit - curWeek;
-				if (item.targetY == Std.int(0) && unlocked) {
-					item.alpha = 1;
-				} else {
-					if (item.targetY == Std.int(0)) {
-						thing.visible = true;
-					} else {
-						thing.visible = false;
-					}
-					item.alpha = 0.6;
-				}
-				bullShit++;
+			item.targetY = bullShit - curWeek;
+			if (item.targetY == Std.int(0) && unlocked) {
+				item.alpha = 1;
+			} else {
+				item.alpha = 0.6;
 			}
+			bullShit++;
 		}
 
 		bgSprite.visible = true;
