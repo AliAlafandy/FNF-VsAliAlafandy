@@ -186,7 +186,7 @@ class StoryMenuState extends MusicBeatState
 		// Flash HUD
 		localFlash = ClientPrefs.flashes;
 
-		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 115).loadGraphic(Paths.image('flash'));
+		flash = new FlxSprite(FlxG.width - 50, FlxG.height - 100).loadGraphic(Paths.image('flash'));
         flash.antialiasing = ClientPrefs.data.antialiasing;
         flash.updateHitbox();
 		flash.scale.set(0.3, 0.3);
@@ -514,7 +514,7 @@ class StoryMenuState extends MusicBeatState
 				if (item.targetY == Std.int(0) && unlocked) {
 					item.alpha = 1;
 				} else {
-					if (item.targetY == Std.int(0) && !unlocked) {
+					if (item.targetY == Std.int(0)) {
 						thing.visible = true;
 					} else {
 						thing.visible = false;
