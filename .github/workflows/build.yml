@@ -21,7 +21,7 @@ on:
 
 env:
   HAXE_VERSION: 4.3.2
-  PROJECT_NAME: ModsEngine
+  PROJECT_NAME: VsAliAlafandy
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 jobs:
